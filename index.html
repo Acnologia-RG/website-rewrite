@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>HoroBot - A Discord Bot</title>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="author" content="WiNteR">
+		<meta name="description" content="HoroBot - a very capable and helpful Discord bot">
+		<link rel="icon" href="./img/favicon.ico" type="image/x-icon">
+		<link href="https://fonts.googleapis.com/css?family=Raleway:300" rel="stylesheet" type="text/css">
+		<link href="./css/bootstrap.css" rel="stylesheet" type="text/css">
+		<link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css">
+		<link href="./css/animate.css" rel="stylesheet" type="text/css">
+		<link href="./css/main.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+		
+		
+		<script src="./js/google-analytics.js"></script>
+		<script src="./js/jquery-1.11.1.min.js"></script>
+		<script src="./js/tether.min.js"></script>
+		<script src="./js/bootstrap.min.js"></script>
+		<script src="./js/morphext.min.js"></script>
+		<script src="./js/smooth-scroll.js"></script>
+		<script>
+			smoothScroll.init();
+		</script>
+		<script>
+			$(document).ready(function(){
+				var scroll_start = 0;
+				var startchange = $('#top');
+				var offset = startchange.offset();
+				 if (startchange.length){
+				$(document).scroll(function() {
+				   scroll_start = $(this).scrollTop();
+				   if(scroll_start > offset.top) {
+					   $(".navbar-inverse").css('background-color', 'rgba(240,240,240,0.85)');
+					} else {
+					   $('.navbar-inverse').css('background-color', 'transparent');
+					}
+				});
+				 }
+			 });
+		</script>
+	</body>
+</html>
