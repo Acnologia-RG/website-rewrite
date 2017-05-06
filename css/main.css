@@ -36,14 +36,11 @@ h1 {
 }
 
 .navbar-inverse .navbar-nav > li > a {
-	color: #fc4e1b;
-	-webkit-transition: all 0.5s ease;
-	transition: all 0.25s ease;
 	float: none;
+	margin: 5px;
 }
 
 .navbar-inverse .navbar-nav > li > a:hover {
-	background-color: #fc4e1b;
 	border-radius: 1px;
 }
 
@@ -74,28 +71,47 @@ h1 {
 	font-weight: bold;
 }
 
-.navbar .dropdown-menu {
-	color: #fc4e1b !important;
-}
-
-.navbar .dropdown-menu li > a:active {
-	color: #fc4e1b !important;
-	background-color: #c4c4c4 !important;
-}
-
 .navbar .dropdown-menu li > a:hover {
 	color: #fc4e1b !important;
-	background-color: #c4c4c4 !important;
+	background-color: #fc4e1b !important;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+	transition: all 0.25s ease;
+	-webkit-transition: all 0.25s ease;
+	color: #fc4e1b !important;
+	background-color: transparent !important;
+	border: 1px solid #fc4e1b;
+	margin: 0;
+	margin-top: 30px;
+	padding: 0;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover {
+	color: #fc4e1b !important;
+	background-color: #fc4e1b !important;
+}
+
+.navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
+	transition: all 0.25s ease;
+	-webkit-transition: all 0.25s ease;
+	color: #fc4e1b !important;
+	background-color: #transparent !important;
+}
+
+.navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover {
+	color: #fc4e1b !important;
+	background-color: #fc4e1b !important;
 }
 
 .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
-	color: #ffffff !important;
-	background-color: #fc4e1b !important;
+	color: #fc4e1b !important;
+	background-color: #f2f2f2 !important;
 }
 
 .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
 	color: #fc4e1b !important;
-	background-color: transparent;
+	background-color: #f2f2f2 !important;
 }
 
 .dropdown-menu > li > a {
@@ -117,7 +133,7 @@ h1 {
 	border-color: #fc4e1b;
 }
 
-@media (max-width: 990px) {
+@media (max-width: 1000px) {
 	.navbar-collapse.collapsing,
 	.navbar-collapse.in {
 		position: absolute;
@@ -136,7 +152,7 @@ h1 {
 	}
 }
 
-@media (max-width: 990px) {
+@media (max-width: 1000px) {
 	.navbar-header {
 		float: none;
     }
