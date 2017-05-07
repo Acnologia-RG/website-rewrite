@@ -19,7 +19,7 @@
 		<nav class="navbar navbar-inverse navbar-fixed-top animated fadeInDown" role="navigation" style="background: linear gradient(to right, rgb(255, 255, 255), rgb(242, 242, 242));">
 			<div class="container">
 				<div class="navbar-header">
-					<a class="navbar-brand" href="./index.html">
+					<a class="navbar-brand" href="./index">
 						<img class="circle-icon" src="./img/icon-small.png">
 						<h1>HoroBot</h1>
 						<a class="btn btn-default btn-invite hidden-xs" href="https://discordapp.com/oauth2/authorize?client_id=289381714885869568&scope=bot&permissions=372435975" target="_blank">
@@ -49,17 +49,21 @@
 							</a>
 							<ul class="dropdown-menu">
 								<li>
-									<a href="./about.html">
+									<a href="./about">
 										<i class="glyphicon glyphicon-question-sign"></i>
 										About
 									</a>
-									<a href="./commands.html">
+									<a href="./commands">
 										<i class="glyphicon glyphicon-book"></i>
 										Commands
 									</a>
 									<a href="https://github.com/WinteryFox/HoroBot" target="_blank">
 										<i class="glyphicon glyphicon-console"></i>
 										GitHub
+									</a>
+									<a href="https://patreon.com/HoroBot" target="_blank">
+										<i class="glyphicon glyphicon-euro"></i>
+										Patreon
 									</a>
 								</li>
 							</ul>
@@ -71,10 +75,29 @@
 							</a>
 						</li>
 						<li>
-							<a href="https://patreon.com/HoroBot" class="btn btn-default btn-invite hidden-xs" target="_blank">
-								<i class="glyphicon glyphicon-euro"></i>
-								Patreon
-							</a>
+							<?php
+								require_once __DIR__ . '/vendor/autoload.php';
+								
+								$provider = new \Discord\OAuth\Discord([
+									'clientId' => '289381714885869568',
+									'clientSecret' => '',
+									'redirectUri' => 'http://localhost/callback.php',
+								]);
+								
+								if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
+									$provider
+									echo '<a href="' . $provider->getAuthorizationUrl(array('scope' => 'identify guilds')) . '" class="btn btn-default btn-invite"><i class="glyphicon glyphicon-log-in"></i> Login</a>';
+								} else {
+									$token = $provider->getAccessToken('authorization_code', [
+										'code' => $_GET['code'],
+									]);
+									
+									$user = $provider->getResourceOwner($token);
+									$guilds = $user->guilds;
+									
+									echo '<a href="./profile" class="btn btn-default btn-invite" style="padding: 0"><img src="https://cdn.discordapp.com/avatars/' . $user->id . '/' . $user->avatar . '.png?size=128" width="50" height="50">' . $user->username . '</a>';
+								}
+							?>
 						</li>
 					</ul>
 				</div>
@@ -106,7 +129,7 @@
 		</div>
 		
 		<div class="container">
-			
+
 		</div>
 		
 		<script src="./js/google-analytics.js"></script>
