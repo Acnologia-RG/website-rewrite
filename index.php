@@ -36,7 +36,7 @@
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav navbar-right" style="font-size: 14px">
 						<li>
-							<a class="btn btn-default btn-invite hidden-xs" href="./index.html">
+							<a class="btn btn-default btn-invite hidden-xs" href="./index">
 								<i class="glyphicon glyphicon-home"></i>
 								<b>Home</b>
 							</a>
@@ -81,21 +81,16 @@
 							
 							$provider = new \Discord\OAuth\Discord([
 								'clientId' => '289381714885869568',
-								'clientSecret' => '',
-								'redirectUri' => 'http://localhost/callback.php',
+								'clientSecret' => '-hMP6x7TVbef73Sy7Ty-9m5HdZ8GLO4i',
+								'redirectUri' => 'http://localhost/callback',
 							]);
 							
 							if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
 								$token = $_SESSION['access_token'];
 								$user = $provider->getResourceOwner($token);
 								
-								if (isset($_GET['logout']) && $_GET['logout']) {
-									session_destroy();
-									header('Location: http://localhost/');
-								}
-								
-								echo '<li><a href="./profile.php" class="btn btn-default btn-login" style="padding: 0; padding-right: 10px; padding-left: 10px"><img src="https://cdn.discordapp.com/avatars/' . $user->id . '/' . $user->avatar . '.png?size=128" width="50" height="50"> <b>' . $user->username . '</b></a></li>';
-								echo '<li><a href="./index.php?logout=1" class="btn btn-default btn-invite"><i class="glyphicon glyphicon-log-in"></i> <b>Logout</b></a></li>';
+								echo '<li><a href="./profile" class="btn btn-default btn-login" style="padding: 0; padding-right: 10px; padding-left: 10px"><img src="https://cdn.discordapp.com/avatars/' . $user->id . '/' . $user->avatar . '.png?size=128" width="50" height="50"> <b>' . $user->username . '</b></a></li>';
+								echo '<li><a href="./callback?logout=1" class="btn btn-default btn-invite"><i class="glyphicon glyphicon-log-in"></i> <b>Logout</b></a></li>';
 							} else {
 								echo '<li><a href="' . $provider->getAuthorizationUrl(array('scope' => 'identify guilds')) . '" class="btn btn-default btn-invite"><i class="glyphicon glyphicon-log-in"></i> <b>Login</b></a></li>';
 							}
@@ -135,19 +130,13 @@
 		
 		<script src="./js/google-analytics.js"></script>
 		<script src="./js/jquery-1.11.1.min.js"></script>
-		<script src="./js/tether.min.js"></script>
 		<script src="./js/bootstrap.min.js"></script>
-		<script src="./js/morphext.min.js"></script>
-		<script src="./js/smooth-scroll.js"></script>
-		<script>
-			smoothScroll.init();
-		</script>
 		<script>
 			$(document).ready(function(){
 				var scroll_start = 0;
 				var startchange = $('#top');
 				var offset = startchange.offset();
-				 if (startchange.length){
+				if (startchange.length){
 				$(document).scroll(function() {
 				   scroll_start = $(this).scrollTop();
 				   if(scroll_start > offset.top) {
@@ -156,7 +145,7 @@
 					   $('.navbar-inverse').css('background-color', 'transparent');
 					}
 				});
-				 }
+				}
 			 });
 		</script>
 	</body>

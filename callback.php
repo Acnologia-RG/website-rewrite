@@ -7,9 +7,19 @@
 			
 			$provider = new \Discord\OAuth\Discord([
 				'clientId' => '289381714885869568',
-				'clientSecret' => 'BkvYsgRY1O_npJ_7v-unvgw8e9YhzUh6',
+				'clientSecret' => '-hMP6x7TVbef73Sy7Ty-9m5HdZ8GLO4i',
 				'redirectUri' => 'http://localhost/callback.php',
 			]);
+			
+			$redirect = 'http://localhost';
+			if (isset($_GET['redirect']) && $_GET['redirect']) {
+				$redirect = $_GET['redirect'];
+			}
+			
+			if (isset($_GET['logout']) && $_GET['logout']) {
+				session_destroy();
+				header('Location: ' . $redirect);
+			}
 			
 			if (isset($_GET['code'])) {
 				$token = $provider->getAccessToken('authorization_code', [
@@ -17,8 +27,11 @@
 				]);
 				
 				$_SESSION['access_token'] = $token;
-				header('Location: http://localhost/');
+				
+				header('Location: ' . $redirect);
 			}
+			
+			echo 'Nothing to see here, click <a href="http://localhost">here</a> to return to the website';
 		?>
 	</body>
 </html>
