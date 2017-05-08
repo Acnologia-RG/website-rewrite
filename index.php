@@ -44,26 +44,26 @@
 						<li>
 							<a type="button" class="btn btn-default btn-invite hidden-xs dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 								<i class="glyphicon glyphicon-info-sign"></i>
-								Commands & Info
+								<b>Commands & Info</b>
 								<span class="caret">
 							</a>
 							<ul class="dropdown-menu">
 								<li>
 									<a href="./about">
 										<i class="glyphicon glyphicon-question-sign"></i>
-										About
+										<b>About</b>
 									</a>
 									<a href="./commands">
 										<i class="glyphicon glyphicon-book"></i>
-										Commands
+										<b>Commands</b>
 									</a>
 									<a href="https://github.com/WinteryFox/HoroBot" target="_blank">
 										<i class="glyphicon glyphicon-console"></i>
-										GitHub
+										<b>GitHub</b>
 									</a>
 									<a href="https://patreon.com/HoroBot" target="_blank">
 										<i class="glyphicon glyphicon-euro"></i>
-										Patreon
+										<b>Patreon</b>
 									</a>
 								</li>
 							</ul>
@@ -71,34 +71,35 @@
 						<li>
 							<a href="https://discord.gg/MCUTSZz" class="btn btn-default btn-invite hidden-xs" target="_blank">
 								<i class="glyphicon glyphicon-comment"></i>
-								Support
+								<b>Support</b>
 							</a>
 						</li>
-						<li>
-							<?php
-								require_once __DIR__ . '/vendor/autoload.php';
+						<?php
+							require_once __DIR__ . '/vendor/autoload.php';
+							
+							session_start();
+							
+							$provider = new \Discord\OAuth\Discord([
+								'clientId' => '289381714885869568',
+								'clientSecret' => '',
+								'redirectUri' => 'http://localhost/callback.php',
+							]);
+							
+							if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
+								$token = $_SESSION['access_token'];
+								$user = $provider->getResourceOwner($token);
 								
-								$provider = new \Discord\OAuth\Discord([
-									'clientId' => '289381714885869568',
-									'clientSecret' => '',
-									'redirectUri' => 'http://localhost/callback.php',
-								]);
-								
-								if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
-									$provider
-									echo '<a href="' . $provider->getAuthorizationUrl(array('scope' => 'identify guilds')) . '" class="btn btn-default btn-invite"><i class="glyphicon glyphicon-log-in"></i> Login</a>';
-								} else {
-									$token = $provider->getAccessToken('authorization_code', [
-										'code' => $_GET['code'],
-									]);
-									
-									$user = $provider->getResourceOwner($token);
-									$guilds = $user->guilds;
-									
-									echo '<a href="./profile" class="btn btn-default btn-invite" style="padding: 0"><img src="https://cdn.discordapp.com/avatars/' . $user->id . '/' . $user->avatar . '.png?size=128" width="50" height="50">' . $user->username . '</a>';
+								if (isset($_GET['logout']) && $_GET['logout']) {
+									session_destroy();
+									header('Location: http://localhost/');
 								}
-							?>
-						</li>
+								
+								echo '<li><a href="./profile.php" class="btn btn-default btn-login" style="padding: 0; padding-right: 10px; padding-left: 10px"><img src="https://cdn.discordapp.com/avatars/' . $user->id . '/' . $user->avatar . '.png?size=128" width="50" height="50"> <b>' . $user->username . '</b></a></li>';
+								echo '<li><a href="./index.php?logout=1" class="btn btn-default btn-invite"><i class="glyphicon glyphicon-log-in"></i> <b>Logout</b></a></li>';
+							} else {
+								echo '<li><a href="' . $provider->getAuthorizationUrl(array('scope' => 'identify guilds')) . '" class="btn btn-default btn-invite"><i class="glyphicon glyphicon-log-in"></i> <b>Login</b></a></li>';
+							}
+						?>
 					</ul>
 				</div>
 			</div>
@@ -129,7 +130,7 @@
 		</div>
 		
 		<div class="container">
-
+			
 		</div>
 		
 		<script src="./js/google-analytics.js"></script>

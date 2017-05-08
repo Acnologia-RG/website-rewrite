@@ -1,4 +1,5 @@
 RewriteEngine on
 RewriteRule ^index$ index.php [NC]
-RewriteRule ^about$ about.html [NC]
-RewriteRule ^commands$ commands.html [NC]
+RewriteRule ^about$ about.php [NC]
+RewriteRule ^commands$ commands.php [NC]
+RewriteRule ^profile$ profile.php [NC]

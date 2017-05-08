@@ -131,6 +131,21 @@ h1 {
 	border-color: #fc4e1b;
 }
 
+.btn-login {
+	-webkit-transition: all 0.25s ease;
+	transition: all 0.25s ease;
+	border: 1px solid #fc4e1b;
+	margin-top: 30px;
+	float: left;
+	color: #fc4e1b;
+	padding: 0;
+}
+
+.btn-login:hover {
+	background-color: #f2f2f2;
+	border-color: #fc4e1b;
+}
+
 .circle-icon {
 	float: left;
 	width: 60px;
