@@ -82,7 +82,7 @@
 							
 							$provider = new \Discord\OAuth\Discord([
 								'clientId' => '289381714885869568',
-								'clientSecret' => '4uah6A36HkM-R932Yu2ckMrINLskzsy0',
+								'clientSecret' => 'zmcqowQRG2NfpHz2rnyiIdy_0k2hcFV1',
 								'redirectUri' => 'http://localhost/callback',
 							]);
 							
@@ -111,12 +111,15 @@
 		</div>
 		
 		<div class="container">
-			<center><h1><b>Your Guilds</b></h1></center>
+			<center><h1 class="orange"><b>Your Guilds</b></h1></center>
 			<div class="panel-group" id="accordion">
 				<?php
-					$con = pg_connect("host=localhost port=5432 user=postgres password=RazorStar3");
+					$con = null;
+					try {
+						$con = pg_connect("host=localhost port=5432 user=postgres password=RazorStar3");
+					} catch (Exception $e) { }
 					if (!$con) {
-						echo 'An unexpected exception happened :c';
+						echo '<center><h2>An unexpected exception happened :c</h2></center>';
 						return;
 					}
 					
@@ -133,9 +136,10 @@
 						}
 						
 						if ($haspermissions) {
-							error_reporting(E_ALL ^ E_WARNING); // Fix this shit
-							$settings = pg_query($con, "SELECT * FROM guilds.guild WHERE id='" . $guilds[$i]->id . "'");
-							error_reporting(E_ALL);
+							$settings = null;
+							try {
+								$settings = pg_query($con, "SELECT * FROM guilds.guild WHERE id='" . $guilds[$i]->id . "'");
+							} catch (Exception $e) { }
 							if (!$settings) {
 								continue;
 							}

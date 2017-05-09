@@ -7,7 +7,7 @@
 			
 			$provider = new \Discord\OAuth\Discord([
 				'clientId' => '289381714885869568',
-				'clientSecret' => '4uah6A36HkM-R932Yu2ckMrINLskzsy0',
+				'clientSecret' => 'zmcqowQRG2NfpHz2rnyiIdy_0k2hcFV1',
 				'redirectUri' => 'http://localhost/callback',
 			]);
 			
@@ -21,7 +21,7 @@
 				header('Location: ' . $redirect);
 			}
 			
-			if (isset($_GET['code'])) {
+			if (isset($_GET['code']) && $_GET['code']) {
 				$token = $provider->getAccessToken('authorization_code', [
 					'code' => $_GET['code'],
 				]);
@@ -31,7 +31,7 @@
 				header('Location: ' . $redirect);
 			}
 			
-			echo 'Nothing to see here, click <a href="http://localhost">here</a> to return to the website';
+			echo 'Nothing to see here. Something must have gone wrong, click <a href="http://localhost">here</a> to return to the website';
 		?>
 	</body>
 </html>

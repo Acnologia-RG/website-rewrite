@@ -81,13 +81,17 @@
 							
 							$provider = new \Discord\OAuth\Discord([
 								'clientId' => '289381714885869568',
-								'clientSecret' => '4uah6A36HkM-R932Yu2ckMrINLskzsy0',
+								'clientSecret' => 'zmcqowQRG2NfpHz2rnyiIdy_0k2hcFV1',
 								'redirectUri' => 'http://localhost/callback',
 							]);
 							
 							if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
 								$token = $_SESSION['access_token'];
-								$user = $provider->getResourceOwner($token);
+								try {
+									$user = $provider->getResourceOwner($token);
+								} catch (Exception $e) {
+									header 'Location: http://localhost/callback?logout=1';
+								}
 								
 								echo '<li><a href="./profile" class="btn btn-default btn-login" style="padding: 0; padding-right: 10px; padding-left: 10px"><img src="https://cdn.discordapp.com/avatars/' . $user->id . '/' . $user->avatar . '.png?size=128" width="50" height="50"> <b>' . $user->username . '</b></a></li>';
 								echo '<li><a href="./callback?logout=1" class="btn btn-default btn-invite"><i class="glyphicon glyphicon-log-in"></i> <b>Logout</b></a></li>';
