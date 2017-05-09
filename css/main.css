@@ -172,8 +172,6 @@ h1 {
 @media (max-width: 1000px) {
 	.navbar-collapse.collapsing,
 	.navbar-collapse.in {
-		position: absolute;
-		width: 80%;
 		background-color: rgba(240, 240, 240, 0.95);
 		border-bottom: 1px solid #cccccc;
 	}

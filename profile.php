@@ -14,6 +14,7 @@
 		<link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css">
 		<link href="./css/animate.css" rel="stylesheet" type="text/css">
 		<link href="./css/main.css" rel="stylesheet" type="text/css">
+		<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 	</head>
 	<body id="top">
 		<nav class="navbar navbar-inverse navbar-fixed-top animated fadeInDown" role="navigation" style="background: linear gradient(to right, rgb(255, 255, 255), rgb(242, 242, 242));">
@@ -81,7 +82,7 @@
 							
 							$provider = new \Discord\OAuth\Discord([
 								'clientId' => '289381714885869568',
-								'clientSecret' => '-hMP6x7TVbef73Sy7Ty-9m5HdZ8GLO4i',
+								'clientSecret' => '4uah6A36HkM-R932Yu2ckMrINLskzsy0',
 								'redirectUri' => 'http://localhost/callback',
 							]);
 							
@@ -113,8 +114,15 @@
 			<center><h1><b>Your Guilds</b></h1></center>
 			<div class="panel-group" id="accordion">
 				<?php
+					$con = pg_connect("host=localhost port=5432 user=postgres password=RazorStar3");
+					if (!$con) {
+						echo 'An unexpected exception happened :c';
+						return;
+					}
+					
 					$guilds = $user->guilds;
 					
+					$size = 0;
 					for ($i = 0; $i < count($guilds); $i++) {
 						$haspermissions = false;
 						
@@ -125,21 +133,42 @@
 						}
 						
 						if ($haspermissions) {
+							error_reporting(E_ALL ^ E_WARNING); // Fix this shit
+							$settings = pg_query($con, "SELECT * FROM guilds.guild WHERE id='" . $guilds[$i]->id . "'");
+							error_reporting(E_ALL);
+							if (!$settings) {
+								continue;
+							}
+							
+							$icon = null;
+							if ($guilds[$i]->icon == null) {
+								$icon = 'https://discordapp.com/assets/dd4dbc0016779df1378e7812eabaa04d.png';
+							} else {
+								$icon = 'https://cdn.discordapp.com/icons/' . $guilds[$i]->id . '/' . $guilds[$i]->icon . '.png?size=128';
+							}
+							
 							echo '<div class="panel panel-default">
 									<div class="panel-heading">
 										<h4 class="panel-title">
 											<a data-toggle="collapse" data-parent="#accordion" href="#collapse' . $i . '">
-												<img src="https://cdn.discordapp.com/icons/' . $guilds[$i]->id . '/' . $guilds[$i]->icon . '.png?size=128" width="50" height="50"> ' . $guilds[$i]->name . '
+												<div id="container" style="height: 100%; width: 100%; display: inline-block">
+													<img src="' . $icon . '" class="circle-icon"> <h2 style="margin-left: 70px; margin-top: 15px">' . $guilds[$i]->name . '</h2>
+												</div>
 											</a>
 										</h4>
 									</div>
 									<div id="collapse' . $i . '" class="panel-collapse collapse">
 										<div class="panel-body">
-											Settings here
+											<input type="checkbox" ' . ' data-toggle="toggle">
 										</div>
 									</div>
 								 </div>';
+							$size++;
 						}
+					}
+					
+					if ($size == 0) {
+						echo "<center><h2>Nothing here but me, the Wise Wolf of Yoitsu!</h2></center>";
 					}
 				?>
 			</div>
@@ -148,6 +177,7 @@
 		<script src="./js/google-analytics.js"></script>
 		<script src="./js/jquery-1.11.1.min.js"></script>
 		<script src="./js/bootstrap.min.js"></script>
+		<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 		<script>
 			$(document).ready(function(){
 				var scroll_start = 0;
