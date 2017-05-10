@@ -87,10 +87,11 @@
 							
 							if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
 								$token = $_SESSION['access_token'];
+								$user = null;
 								try {
 									$user = $provider->getResourceOwner($token);
 								} catch (Exception $e) {
-									header 'Location: http://localhost/callback?logout=1';
+									header('Location: http://localhost/callback?logout=1');
 								}
 								
 								echo '<li><a href="./profile" class="btn btn-default btn-login" style="padding: 0; padding-right: 10px; padding-left: 10px"><img src="https://cdn.discordapp.com/avatars/' . $user->id . '/' . $user->avatar . '.png?size=128" width="50" height="50"> <b>' . $user->username . '</b></a></li>';

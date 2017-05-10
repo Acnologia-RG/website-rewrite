@@ -111,8 +111,8 @@
 		</div>
 		
 		<div class="container">
-			<center><h1 class="orange"><b>Your Guilds</b></h1></center>
-			<div class="panel-group" id="accordion">
+			<center><h1 class="orange animated fadeInRight"><b>Your Guilds</b></h1></center>
+			<div class="panel-group animated fadeInLeft" id="accordion">
 				<?php
 					$con = null;
 					try {
@@ -139,7 +139,7 @@
 							$settings = null;
 							try {
 								$settings = pg_query($con, "SELECT * FROM guilds.guild WHERE id='" . $guilds[$i]->id . "'");
-							} catch (Exception $e) { }
+							} catch (Exception $e) { continue; }
 							if (!$settings) {
 								continue;
 							}
@@ -162,9 +162,73 @@
 										</h4>
 									</div>
 									<div id="collapse' . $i . '" class="panel-collapse collapse">
-										<div class="panel-body">
-											<input type="checkbox" ' . ' data-toggle="toggle">
-										</div>
+										<div class="panel-body">';
+										
+										echo '<form action="./submit#redirect=http://localhost/profile" method="POST">';
+										
+										$row = pg_fetch_row($settings);
+										
+										echo "These are <b>" . $guilds[$i]->name . "</b>'s settings, I trust you've received the usual lecture from the guild owner. It usually boils down to these three things:<br>
+											#1) Respect the privacy of others.<br>
+											#2) Think before you type.<br>
+											#3) With great power comes great responsibility.<br><br>";
+										echo '<label for="id">Guild ID</label>
+											<textarea class="form-control" rows="1" id="id" disabled>' . $row[0] . '</textarea><br><br>';
+										echo '<label for="language">Language</label>
+										<select class="form-control" id="language" value="' . $row[1] . '">
+											<option value="en">EN</option>
+											<option value="nl">NL</option>
+											<option value="es">ES</option>
+											<option value="pt">PT</option>
+										</select><br>';
+										echo '<label for="prefix">Prefix</label><br>
+											<input type="text" id="prefix" value="' . $row[2] . '"></input><br><br>';
+										echo '<label for="welcome">Welcome Message</label><br>
+											<input type="text" id="welcome" value="' . $row[3] . '"></input><br><br>';
+										echo '<label for="pmwelcome">PM Welcome Message</label><br>
+											<input type="text" id="pmwelcome" value="' . $row[5] . '"></input><br><br>';
+										echo '<label for="role">[Auto-Role] Role ID</label><br>
+											<input type="text" id="role" value="' . $row[4] . '"></input><br><br>';
+										
+										if ($row[6] == 't') {
+											echo '<label for="lvlup">Level Up Notifications</label><br>
+												<input type="checkbox" id="lvlup" checked data-toggle="toggle"></input><br><br>';
+										} else {
+											echo '<label for="lvlup">Level Up Notifications</label><br>
+												<input type="checkbox" id="lvlup" data-toggle="toggle"></input><br><br>';
+										}
+										
+										if ($row[7] == 't') {
+											echo '<label for="present">Blacklist Present Ban</label><br>
+												<input type="checkbox" id="present" checked data-toggle="toggle"></input><br><br>';
+										} else {
+											echo '<label for="present">Blacklist Present Ban</label><br>
+												<input type="checkbox" id="present" data-toggle="toggle"></input><br><br>';
+										}
+										
+										if ($row[8] == 't') {
+											echo '<label for="ignore">Blacklist Bot Ignore</label><br>
+												<input type="checkbox" id="ignore" checked data-toggle="toggle"></input><br><br>';
+										} else {
+											echo '<label for="ignore">Blacklist Bot Ignore</label><br>
+												<input type="checkbox" id="ignore" data-toggle="toggle"></input><br><br>';
+										}
+										
+										$blacklist = pg_query($con, "select * from blacklists.blacklist where id='" . $guilds[$i]->id . "';");
+										$sblacklist = "";
+										
+										while ($row = pg_fetch_row($blacklist)) {
+											$sblacklist .= $row[1] . "\n";
+										}
+										
+										echo '<label for="blacklist" value="">Blacklist (new line for new id)</label>
+											<textarea class="form-control" rows="5" id="blacklist">' . $sblacklist . '</textarea><br>';
+										
+										echo '<center><input type="submit" class="btn btn-success"></input></center><br>';
+											
+										echo '</form>';
+										
+							echo		'</div>
 									</div>
 								 </div>';
 							$size++;
