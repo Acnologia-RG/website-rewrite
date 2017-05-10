@@ -130,7 +130,7 @@
 		</div>
 		
 		<div class="container">
-			<img class="">
+			
 		</div>
 		
 		<script src="./js/google-analytics.js"></script>

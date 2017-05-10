@@ -114,24 +114,7 @@
 			</div>
 		</div>
 		
-		<div class="container">
-			<center>
-				<img class="circle-icon-big animated fadeInLeft" src="./img/icon-large.png">
-			</center>
-		</div>
 		
-		<div class="container">
-			<div class="row" style="margin-top: 0%">
-				<hr>
-			</div>
-			<div class="row">
-				<div class="mol-md-5">
-			</div>
-		</div>
-		
-		<div class="container">
-			<img class="">
-		</div>
 		
 		<script src="./js/google-analytics.js"></script>
 		<script src="./js/jquery-1.11.1.min.js"></script>
