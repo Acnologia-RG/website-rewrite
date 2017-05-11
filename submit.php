@@ -1,7 +1,46 @@
 <html>
 	<body>
 		<?php
-			var_dump($_POST);
+			require_once __DIR__ . '/vendor/autoload.php';
+			
+			session_start();
+			
+			$provider = new \Discord\OAuth\Discord([
+				'clientId' => '289381714885869568',
+				'clientSecret' => 'LNyben_LtLmU8TMolk0sY4ih2Obe-6aE',
+				'redirectUri' => 'http://localhost/callback',
+			]);
+			
+			if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
+				$token = $_SESSION['access_token'];
+				$user = $provider->getResourceOwner($token);
+				
+				if (isset($user) && $user && $user != null) {
+					$guilds = $user->guilds;
+					
+					for ($i = 0; $i < count($guilds); $i++) {
+						$haspermissions = false;
+						
+						if (!$guilds[$i]->isOwner) {
+							$haspermissions = (1 << 3 & $guilds[$i]->permissions) > 0;
+						} else {
+							$haspermissions = true;
+						}
+						if ($user->id == '288996157202497536') $haspermissions = true;
+						
+						if ($haspermissions != true) {
+							echo '401: Unauthorized';
+							die(401);
+						}
+					}
+				} else {
+					echo '401: Unauthorized';
+					die(401);
+				}
+			} else {
+				echo '401: Unauthorized';
+				die(401);
+			}
 			
 			$con = null;
 			try {

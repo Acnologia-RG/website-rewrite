@@ -81,7 +81,7 @@
 							
 							$provider = new \Discord\OAuth\Discord([
 								'clientId' => '289381714885869568',
-								'clientSecret' => 'Im735_XxNx9P6Rg4Hw1TqAeWNRIEq7r4',
+								'clientSecret' => 'LNyben_LtLmU8TMolk0sY4ih2Obe-6aE',
 								'redirectUri' => 'http://localhost/callback',
 							]);
 							
@@ -129,9 +129,7 @@
 			</div>
 		</div>
 		
-		<div class="container">
-			<img class="">
-		</div>
+		
 		
 		<script src="./js/google-analytics.js"></script>
 		<script src="./js/jquery-1.11.1.min.js"></script>

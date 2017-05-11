@@ -114,7 +114,43 @@
 			</div>
 		</div>
 		
-		
+		<div class="container">
+			<h3 class="orange">Developer</h3>
+			<table class="table devtable" style="border-color: #eee">
+				<tbody>
+					<tr class="dev">
+						<td>
+							<br>
+							<a href="https://github.com/WinteryFox" target="_blank" style="color: #4c4c4c">
+								<div class="circle-icon-dev" style="background: url('./img/avatars/fox.png') no-repeat; background-size: 124px 124px; background-position: center"></div>
+								<br>
+								<h4>Le Winter-y Fox</h4>
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<h3 class="orange">Contributors</h3>
+			<table class="table devtable" style="border-color: #eee">
+				<tbody>
+					<tr class="dev">
+						<td>
+							<br>
+							<a href="https://flarebot.stream/" target="_blank" style="color: #4c4c4c">
+								<div class="circle-icon-dev" style="background: url('./img/avatars/arsen.png') no-repeat; background-size: 124px 124px; background-position: center"></div>
+							</a>
+							<p style="text-align: center">
+								<br>
+								<b>Arsen</b>
+								<br>
+								Utility Methods
+							</p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 		
 		<script src="./js/google-analytics.js"></script>
 		<script src="./js/jquery-1.11.1.min.js"></script>

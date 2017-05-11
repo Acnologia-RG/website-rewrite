@@ -82,7 +82,7 @@
 							
 							$provider = new \Discord\OAuth\Discord([
 								'clientId' => '289381714885869568',
-								'clientSecret' => 'Im735_XxNx9P6Rg4Hw1TqAeWNRIEq7r4',
+								'clientSecret' => 'LNyben_LtLmU8TMolk0sY4ih2Obe-6aE',
 								'redirectUri' => 'http://localhost/callback',
 							]);
 							
@@ -112,155 +112,157 @@
 		
 		<div class="container">
 			<center><h1 class="orange animated fadeInRight"><b>Your Guilds</b></h1></center>
-			<div class="panel-group animated fadeInLeft" id="accordion">
-				<?php
-					if (isset($_GET['submit']) && $_GET['submit'] == 1) {
-						echo '<div class="panel-group">
-								<div class="panel panel-success">
-									<div class="panel-heading">Success!</div>
-									<div class="panel-body">Successfully saved the guild settings!</div>
-								</div>
-							</div>';
-					} else if(isset($_GET['submit']) && $_GET['submit'] == 0) {
-						echo '<div class="panel-group">
-								<div class="panel panel-danger">
-									<div class="panel-heading">Epic Failure!</div>
-									<div class="panel-body">Something went wrong while saving the guild settings, try again later!</div>
-								</div>
-							</div>';
-					}
-					
-					$con = null;
-					try {
-						$con = pg_connect("host=localhost port=5432 user=postgres password=RazorStar3");
-					} catch (Exception $e) {
-						echo '<center><h2>An unexpected exception happened :c</h2></center>';
-						die(1);
-					}
-					if (!$con) {
-						echo '<center><h2>An unexpected exception happened :c</h2></center>';
-						die(1);
-					}
-					
-					$guilds = $user->guilds;
-					
-					$size = 0;
-					for ($i = 0; $i < count($guilds); $i++) {
-						$haspermissions = false;
-						
-						if (!$guilds[$i]->isOwner) {
-							$haspermissions = (1 << 3 & $guilds[$i]->permissions) > 0;
-						} else {
-							$haspermissions = true;
+				<div class="panel-group animated fadeInLeft" id="accordion">
+					<?php
+					if (isset($user) && $user && $user != null) {
+						if (isset($_GET['submit']) && $_GET['submit'] == 1) {
+							echo '<div class="panel-group">
+									<div class="panel panel-success">
+										<div class="panel-heading">Success!</div>
+										<div class="panel-body">Successfully saved the guild settings!</div>
+									</div>
+								</div>';
+						} else if(isset($_GET['submit']) && $_GET['submit'] == 0) {
+							echo '<div class="panel-group">
+									<div class="panel panel-danger">
+										<div class="panel-heading">Epic Failure!</div>
+										<div class="panel-body">Something went wrong while saving the guild settings, try again later!</div>
+									</div>
+								</div>';
 						}
-						if ($user->id == '288996157202497536') $haspermissions = true;
 						
-						if ($haspermissions) {
-							$settings = null;
-							try {
-								$settings = pg_query($con, "SELECT * FROM guilds.guild WHERE id='" . $guilds[$i]->id . "'");
-							} catch (Exception $e) {
-								continue;
-							}
-							if (!isset($settings) && !$settings) {
-								continue;
-							}
-							if (pg_num_rows($settings) == 0) {
-								continue;
-							}
+						$con = null;
+						try {
+							$con = pg_connect("host=localhost port=5432 user=postgres password=RazorStar3");
+						} catch (Exception $e) {
+							echo '<center><h2>An unexpected exception happened :c</h2></center>';
+							die(1);
+						}
+						if (!$con) {
+							echo '<center><h2>An unexpected exception happened :c</h2></center>';
+							die(1);
+						}
+						
+						$guilds = $user->guilds;
+						
+						$size = 0;
+						for ($i = 0; $i < count($guilds); $i++) {
+							$haspermissions = false;
 							
-							$icon = null;
-							if ($guilds[$i]->icon == null) {
-								$icon = 'https://discordapp.com/assets/dd4dbc0016779df1378e7812eabaa04d.png';
+							if (!$guilds[$i]->isOwner) {
+								$haspermissions = (1 << 3 & $guilds[$i]->permissions) > 0;
 							} else {
-								$icon = 'https://cdn.discordapp.com/icons/' . $guilds[$i]->id . '/' . $guilds[$i]->icon . '.png?size=128';
+								$haspermissions = true;
 							}
+							if ($user->id == '288996157202497536') $haspermissions = true;
 							
-							echo '<div class="panel panel-default">
-									<div class="panel-heading">
-										<h4 class="panel-title">
-											<a data-toggle="collapse" data-parent="#accordion" href="#collapse' . $i . '">
-												<div id="container" style="height: 100%; width: 100%; display: inline-block">
-													<img src="' . $icon . '" class="circle-icon"> <h2 style="margin-left: 70px; margin-top: 15px">' . $guilds[$i]->name . '</h2>
-												</div>
-											</a>
-										</h4>
-									</div>
-									<div id="collapse' . $i . '" class="panel-collapse collapse">
-										<div class="panel-body">';
-										
-										echo '<form action="./submit" method="POST">';
-										
-										$row = pg_fetch_row($settings);
-										
-										echo "<p style=\"color: #990000\">These are <b>" . $guilds[$i]->name . "</b>'s settings, I trust you've received the usual lecture from the guild owner. It usually boils down to these three things:<br>
-											#1) Respect the privacy of others.<br>
-											#2) Think before you type.<br>
-											#3) With great power comes great responsibility.<br><br></p>";
-										echo '<input type="hidden" name="id" class="form-control" rows="1" id="id" value="' . $guilds[$i]->id . '">';
-										echo '<input type="hidden" name="byID" class="form-control" rows="1" id="byID" value="' . $user->id . '">';
-										echo '<label for="language">Language</label>
-										<select name="language" class="form-control" id="language" value="' . $row[1] . '">
-											<option value="en">English</option>
-											<option value="nl">Dutch</option>
-											<option value="es">Spanish</option>
-											<option value="pt">Portuguese</option>
-										</select><br>';
-										echo '<label for="prefix">Prefix</label><br>
-											<input name="prefix" type="text" id="prefix" value="' . $row[2] . '"></input><br><br>';
-										echo '<label for="welcome">Welcome Message</label><br>
-											<input name="welcome" type="text" id="welcome" value="' . $row[3] . '"></input><br><br>';
-										echo '<label for="pmwelcome">PM Welcome Message</label><br>
-											<input name="pmwelcome" type="text" id="pmwelcome" value="' . $row[5] . '"></input><br><br>';
-										echo '<label for="role">[Auto-Role] Role ID</label><br>
-											<input name="role" type="text" id="role" value="' . $row[4] . '"></input><br><br>';
-										
-										if ($row[6] == 't') {
-											echo '<label for="lvlup">Level Up Notifications</label><br>
-												<input name="lvlup" type="checkbox" id="lvlup" checked data-toggle="toggle" value="on"></input><br><br>';
-										} else {
-											echo '<label for="lvlup">Level Up Notifications</label><br>
-												<input name="lvlup" type="checkbox" id="lvlup" data-toggle="toggle" value="off"></input><br><br>';
-										}
-										
-										if ($row[7] == 't') {
-											echo '<label for="present">Blacklist Present Ban</label><br>
-												<input name="present" type="checkbox" id="present" checked data-toggle="toggle" value="on"></input><br><br>';
-										} else {
-											echo '<label for="present">Blacklist Present Ban</label><br>
-												<input name="present" type="checkbox" id="present" data-toggle="toggle" value="off"></input><br><br>';
-										}
-										
-										if ($row[8] == 't') {
-											echo '<label for="bot">Blacklist Bot Ignore</label><br>
-												<input name="bot" type="checkbox" id="bot" checked data-toggle="toggle" value="on"></input><br><br>';
-										} else {
-											echo '<label for="bot">Blacklist Bot Ignore</label><br>
-												<input name="bot" type="checkbox" id="bot" data-toggle="toggle" value="off"></input><br><br>';
-										}
-										
-										$blacklist = pg_query($con, "select * from blacklists.blacklist where id='" . $guilds[$i]->id . "';");
-										$sblacklist = "";
-										
-										while ($row = pg_fetch_row($blacklist)) {
-											$sblacklist .= $row[1] . "\n";
-										}
-										
-										echo '<label for="blacklist">Blacklist (new line for new id)</label>
-											<textarea name="blacklist" class="form-control" rows="5" id="blacklist">' . $sblacklist . '</textarea><br>';
-										
-										echo '<center><input type="submit" class="btn btn-success"></input></center><br>';
-										
-										echo '</form>';
-										
-							echo		'</div>
-									</div>
-								 </div>';
-							$size++;
+							if ($haspermissions) {
+								$settings = null;
+								try {
+									$settings = pg_query($con, "SELECT * FROM guilds.guild WHERE id='" . $guilds[$i]->id . "'");
+								} catch (Exception $e) {
+									continue;
+								}
+								if (!isset($settings) && !$settings) {
+									continue;
+								}
+								if (pg_num_rows($settings) == 0) {
+									continue;
+								}
+								
+								$icon = null;
+								if ($guilds[$i]->icon == null) {
+									$icon = 'https://discordapp.com/assets/dd4dbc0016779df1378e7812eabaa04d.png';
+								} else {
+									$icon = 'https://cdn.discordapp.com/icons/' . $guilds[$i]->id . '/' . $guilds[$i]->icon . '.png?size=128';
+								}
+								
+								echo '<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a data-toggle="collapse" data-parent="#accordion" href="#collapse' . $i . '">
+													<div id="container" style="height: 100%; width: 100%; display: inline-block">
+														<img src="' . $icon . '" class="circle-icon"> <h2 style="margin-left: 70px; margin-top: 15px">' . $guilds[$i]->name . '</h2>
+													</div>
+												</a>
+											</h4>
+										</div>
+										<div id="collapse' . $i . '" class="panel-collapse collapse">
+											<div class="panel-body">';
+											
+											echo '<form action="./submit" method="POST">';
+											
+											$row = pg_fetch_row($settings);
+											
+											echo "<p style=\"color: #990000\">These are <b>" . $guilds[$i]->name . "</b>'s settings, I trust you've received the usual lecture from the guild owner. It usually boils down to these three things:<br>
+												#1) Respect the privacy of others.<br>
+												#2) Think before you type.<br>
+												#3) With great power comes great responsibility.<br><br></p>";
+											echo '<input type="hidden" name="id" class="form-control" rows="1" id="id" value="' . $guilds[$i]->id . '">';
+											echo '<input type="hidden" name="byID" class="form-control" rows="1" id="byID" value="' . $user->id . '">';
+											echo '<label for="language">Language</label>
+											<select name="language" class="form-control" id="language" value="' . $row[1] . '">
+												<option value="en">English</option>
+												<option value="nl">Dutch</option>
+												<option value="es">Spanish</option>
+												<option value="pt">Portuguese</option>
+											</select><br>';
+											echo '<label for="prefix">Prefix</label><br>
+												<input name="prefix" type="text" id="prefix" value="' . $row[2] . '"></input><br><br>';
+											echo '<label for="welcome">Welcome Message</label><br>
+												<input name="welcome" type="text" id="welcome" value="' . $row[3] . '"></input><br><br>';
+											echo '<label for="pmwelcome">PM Welcome Message</label><br>
+												<input name="pmwelcome" type="text" id="pmwelcome" value="' . $row[5] . '"></input><br><br>';
+											echo '<label for="role">[Auto-Role] Role ID</label><br>
+												<input name="role" type="text" id="role" value="' . $row[4] . '"></input><br><br>';
+											
+											if ($row[6] == 't') {
+												echo '<label for="lvlup">Level Up Notifications</label><br>
+													<input name="lvlup" type="checkbox" id="lvlup" checked data-toggle="toggle" value="on"></input><br><br>';
+											} else {
+												echo '<label for="lvlup">Level Up Notifications</label><br>
+													<input name="lvlup" type="checkbox" id="lvlup" data-toggle="toggle" value="off"></input><br><br>';
+											}
+											
+											if ($row[7] == 't') {
+												echo '<label for="present">Blacklist Present Ban</label><br>
+													<input name="present" type="checkbox" id="present" checked data-toggle="toggle" value="on"></input><br><br>';
+											} else {
+												echo '<label for="present">Blacklist Present Ban</label><br>
+													<input name="present" type="checkbox" id="present" data-toggle="toggle" value="off"></input><br><br>';
+											}
+											
+											if ($row[8] == 't') {
+												echo '<label for="bot">Blacklist Bot Ignore</label><br>
+													<input name="bot" type="checkbox" id="bot" checked data-toggle="toggle" value="on"></input><br><br>';
+											} else {
+												echo '<label for="bot">Blacklist Bot Ignore</label><br>
+													<input name="bot" type="checkbox" id="bot" data-toggle="toggle" value="off"></input><br><br>';
+											}
+											
+											$blacklist = pg_query($con, "select * from blacklists.blacklist where id='" . $guilds[$i]->id . "';");
+											$sblacklist = "";
+											
+											while ($row = pg_fetch_row($blacklist)) {
+												$sblacklist .= $row[1] . "\n";
+											}
+											
+											echo '<label for="blacklist">Blacklist (new line for new id)</label>
+												<textarea name="blacklist" class="form-control" rows="5" id="blacklist">' . $sblacklist . '</textarea><br>';
+											
+											echo '<center><input type="submit" class="btn btn-success"></input></center><br>';
+											
+											echo '</form>';
+											
+								echo		'</div>
+										</div>
+									 </div>';
+								$size++;
+							}
 						}
 					}
 					
-					if ($size == 0) {
+					if (!isset($size) || $size == 0) {
 						echo "<center><h2>Nothing here but me, the Wise Wolf of Yoitsu!</h2></center>";
 					}
 				?>
