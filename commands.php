@@ -129,10 +129,6 @@
 			</div>
 		</div>
 		
-		<div class="container">
-			
-		</div>
-		
 		<script src="./js/google-analytics.js"></script>
 		<script src="./js/jquery-1.11.1.min.js"></script>
 		<script src="./js/bootstrap.min.js"></script>
