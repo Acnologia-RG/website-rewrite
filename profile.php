@@ -82,7 +82,7 @@
 							
 							$provider = new \Discord\OAuth\Discord([
 								'clientId' => '289381714885869568',
-								'clientSecret' => 'LNyben_LtLmU8TMolk0sY4ih2Obe-6aE',
+								'clientSecret' => 'KTGcUobdJRYWy_83Uhys5Dob-_ysHbBH',
 								'redirectUri' => 'http://localhost/callback',
 							]);
 							
@@ -114,7 +114,6 @@
 			<ul class="nav nav-tabs animated fadeInLeft" style="color: #fc4e1b">
 				<li class="active"><a data-toggle="tab" href="#profile">Profile</a></li>
 				<li><a data-toggle="tab" href="#guilds">Guilds</a></li>
-				<li><a data-toggle="tab" href="#edit">Edit Profile</a></li>
 			</ul>
 			
 			<div class="tab-content animated fadeInUp">
@@ -184,7 +183,11 @@
 										</tr>
 										<tr>
 											<center><th style="color: #fc4e1b">Experience</th></center>
-											<center><td style="color: #8c8c8c"><?php echo $profile[4] . ' / ' . $profile[5] ?></td></center>
+											<center><td style="color: #8c8c8c"><?php echo $profile[3] . ' / ' . $profile[4] ?></td></center>
+										</tr>
+										<tr>
+											<center><th style="color: #fc4e1b">Coins</th></center>
+											<center><td style="color: #8c8c8c"><?php echo $profile[5] ?></td></center>
 										</tr>
 									</tbody>
 								</table>
@@ -193,11 +196,11 @@
 						
 						<div class="panel info-section">
 							<div class="panel-body">
-								<h4><a style="text-decoration: none; color: #404040" class="fa fa-pencil switchpanel-btn pull-right" data-toggle="tab" href="#edit"></a></h4>
 								<b style="color: #fc4e1b">Your Profile</b>
 							</div>
 							
 							<div class="previewImg">
+								
 								<img src="">
 							</div>
 						</div>

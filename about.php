@@ -81,7 +81,7 @@
 							
 							$provider = new \Discord\OAuth\Discord([
 								'clientId' => '289381714885869568',
-								'clientSecret' => 'Im735_XxNx9P6Rg4Hw1TqAeWNRIEq7r4',
+								'clientSecret' => 'KTGcUobdJRYWy_83Uhys5Dob-_ysHbBH',
 								'redirectUri' => 'http://localhost/callback',
 							]);
 							
