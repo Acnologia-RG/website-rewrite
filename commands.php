@@ -45,7 +45,7 @@
 							<a type="button" class="btn btn-default btn-invite hidden-xs dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 								<i class="glyphicon glyphicon-info-sign"></i>
 								<b>Commands & Info</b>
-								<span class="caret">
+								<span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu">
 								<li>
