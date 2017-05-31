@@ -114,7 +114,7 @@
 			</div>
 		</div>
 		
-		<div class="container">
+		<div class="container animated fadeInLeft">
 			<h3 class="orange">Developer</h3>
 			<table class="table devtable" style="border-color: #eee">
 				<tbody>
