@@ -7,11 +7,11 @@
 			
 			$provider = new \Discord\OAuth\Discord([
 				'clientId' => '289381714885869568',
-				'clientSecret' => 'KTGcUobdJRYWy_83Uhys5Dob-_ysHbBH',
-				'redirectUri' => 'http://localhost/callback',
+				'clientSecret' => 'bXQ-fZs2ud9i_6cVqUhnSgAFA6G0ePIe',
+				'redirectUri' => 'https://horobot.pw/callback',
 			]);
 			
-			$redirect = 'http://localhost';
+			$redirect = 'https://horobot.pw';
 			if (isset($_GET['redirect']) && $_GET['redirect']) {
 				$redirect = $_GET['redirect'];
 			}
@@ -31,7 +31,7 @@
 				header('Location: ' . $redirect);
 			}
 			
-			echo 'Nothing to see here. Something must have gone wrong, click <a href="http://localhost">here</a> to return to the website';
+			echo 'Nothing to see here. Something must have gone wrong, click <a href="https://horobot.pw">here</a> to return to the website';
 		?>
 	</body>
 </html>

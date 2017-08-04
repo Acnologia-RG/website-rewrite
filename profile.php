@@ -8,6 +8,15 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="author" content="WiNteR">
 		<meta name="description" content="HoroBot - a very capable and helpful Discord bot">
+		
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://horobot.pw/" />
+		<meta property="og:site_name" content="HoroBot" />
+		<meta property="og:title" content="HoroBot - Discord Bot" />
+		<meta property="og:image" content="./img/icon-small.png" />
+		<meta property="og:description" content="HoroBot - a very capable and helpful Discord bot" />
+		<meta name="twitter:card" value="HoroBot - a very capable and helpful Discord bot" /> 
+		
 		<link rel="icon" href="./img/favicon.ico" type="image/x-icon">
 		<link href="https://fonts.googleapis.com/css?family=Raleway:300" rel="stylesheet" type="text/css">
 		<link href="./css/bootstrap.css" rel="stylesheet" type="text/css">
@@ -82,8 +91,8 @@
 							
 							$provider = new \Discord\OAuth\Discord([
 								'clientId' => '289381714885869568',
-								'clientSecret' => 'KTGcUobdJRYWy_83Uhys5Dob-_ysHbBH',
-								'redirectUri' => 'http://localhost/callback',
+								'clientSecret' => 'bXQ-fZs2ud9i_6cVqUhnSgAFA6G0ePIe',
+								'redirectUri' => 'https://horobot.pw/callback',
 							]);
 							
 							if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
@@ -145,7 +154,7 @@
 								
 								$con = null;
 								try {
-									$con = pg_connect("host=localhost port=5432 user=postgres password=RazorStar3");
+									$con = pg_connect("host=horobot.pw port=5432 user=postgres password=RazorStar3");
 								} catch (Exception $e) {
 									echo '<center><h2>An unexpected exception happened :c</h2></center>';
 									die(1);

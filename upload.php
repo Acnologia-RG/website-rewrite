@@ -54,7 +54,7 @@
 							<a type="button" class="btn btn-default btn-invite hidden-xs dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 								<i class="glyphicon glyphicon-info-sign"></i>
 								<b>Commands & Info</b>
-								<span class="caret"></span>
+								<span class="caret">
 							</a>
 							<ul class="dropdown-menu">
 								<li>
@@ -90,7 +90,7 @@
 							
 							$provider = new \Discord\OAuth\Discord([
 								'clientId' => '289381714885869568',
-								'clientSecret' => 'Im735_XxNx9P6Rg4Hw1TqAeWNRIEq7r4',
+								'clientSecret' => 'bXQ-fZs2ud9i_6cVqUhnSgAFA6G0ePIe',
 								'redirectUri' => 'https://horobot.pw/callback',
 							]);
 							
@@ -103,7 +103,7 @@
 									header('Location: https://horobot.pw/callback?logout=1');
 								}
 								
-								echo '<li><a href="./profile" class="btn btn-default btn-login" style="padding: 0; padding-right: 10px; padding-left: 10px"><img src="https://cdn.discordapp.com/avatars/' . $user->id . '/' . $user->avatar . '.png?size=128" width="50" height="50"> <b>' . htmlspecialchars($user->username) . '</b></a></li>';
+								echo '<li><a href="./profile" class="btn btn-default btn-login" style="padding: 0; padding-right: 10px; padding-left: 10px"><img src="https://cdn.discordapp.com/avatars/' . $user->id . '/' . $user->avatar . '.png?size=128" width="50" height="50"> <b>' . $user->username . '</b></a></li>';
 								echo '<li><a href="./callback?logout=1" class="btn btn-default btn-invite"><i class="glyphicon glyphicon-log-in"></i> <b>Logout</b></a></li>';
 							} else {
 								echo '<li><a href="' . $provider->getAuthorizationUrl(array('scope' => 'identify guilds')) . '" class="btn btn-default btn-invite"><i class="glyphicon glyphicon-log-in"></i> <b>Login</b></a></li>';
@@ -123,20 +123,7 @@
 			</div>
 		</div>
 		
-		<div class="container">
-			<center>
-				<img class="circle-icon-big animated fadeInLeft" src="./img/icon-large.png">
-			</center>
-		</div>
 		
-		<div class="container">
-			<div class="row" style="margin-top: 0%">
-				<hr>
-			</div>
-			<div class="row">
-				<div class="mol-md-5">
-			</div>
-		</div>
 		
 		<script src="./js/google-analytics.js"></script>
 		<script src="./js/jquery-1.11.1.min.js"></script>

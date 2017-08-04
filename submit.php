@@ -7,8 +7,8 @@
 			
 			$provider = new \Discord\OAuth\Discord([
 				'clientId' => '289381714885869568',
-				'clientSecret' => 'KTGcUobdJRYWy_83Uhys5Dob-_ysHbBH',
-				'redirectUri' => 'http://localhost/callback',
+				'clientSecret' => 'bXQ-fZs2ud9i_6cVqUhnSgAFA6G0ePIe',
+				'redirectUri' => 'https://horobot.pw/callback',
 			]);
 			
 			if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
@@ -44,9 +44,9 @@
 			
 			$con = null;
 			try {
-				$con = pg_connect("host=localhost port=5432 user=postgres password=RazorStar3");
+				$con = pg_connect("host=horobot.pw port=5432 user=postgres password=RazorStar3");
 			} catch (Exception $e) {
-				header('Location: http://localhost/profile?submit=0');
+				header('Location: https://horobot.pw/profile?submit=0');
 			}
 			
 			$lvlup = 'true';
@@ -69,7 +69,7 @@
 																	lvlup=$6,
 																	bpresentban=$7,
 																	bignore=$8 where id=$9')) {
-				header('Location: http://localhost/profile?submit=0');
+				header('Location: https://horobot.pw/profile?submit=0');
 			}
 			
 			try {
@@ -83,11 +83,11 @@
 												$present,
 												$_POST['id']));
 			} catch (Exception $e) {
-				header('Location: http://localhost/profile?submit=0');
+				header('Location: https://horobot.pw/profile?submit=0');
 			}
 			
 			if (!pg_prepare($con, 'blacklist', 'insert into blacklists.blacklist (id, userID, by) values ($1, $2, $3) on conflict do nothing;')) {
-				header('Location: http://localhost/profile?submit=0');
+				header('Location: https://horobot.pw/profile?submit=0');
 			}
 			
 			try {
@@ -96,10 +96,10 @@
 					pg_execute($con, 'blacklist', array($_POST['id'], $entry, $_POST['byID']));
 				}
 			} catch (Exception $e) {
-				header('Location: http://localhost/profile?submit=0');
+				header('Location: https://horobot.pw/profile?submit=0');
 			}
 			
-			header('Location: http://localhost/profile?submit=1');
+			header('Location: https://horobot.pw/profile?submit=1');
 		?>
 	</body>
 </html>
