@@ -1,12 +1,27 @@
 <?php
 /**
- * Payment Details Screen - payment-details.php
+ * Payment Details Screen - checkout.php
  */
 
 /**
  * HoroBot / PayPal API Settings
  */
 require __DIR__ . '/store/settings.php';
+
+/**
+ * Ensure Discord Login
+ */
+$provider = new \Discord\OAuth\Discord([
+    'clientId' => $discordClientId,
+    'clientSecret' => $discordClientSecret,
+    'redirectUri' => "$url/checkout",
+]);
+if (isset($_GET['code']) && $_GET['code']) {
+    $token = $provider->getAccessToken('authorization_code', [
+        'code' => $_GET['code'],
+    ]);
+    $_SESSION['access_token'] = $token;
+}
 
 /**
  * Declare Product Array
@@ -16,8 +31,8 @@ $product = [];
 /**
  * Redirect to Store if no Product is Selected
  */
-if ( !($_SESSION['cart'] > 0) ) {
-    header( "Location: $url/shop.php", 302 );
+if ( $_SESSION['cart'] < 1 ) {
+    header( "Location: $url/shop", 302 );
     exit();
 }
 /**

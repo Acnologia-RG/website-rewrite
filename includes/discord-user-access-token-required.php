@@ -7,8 +7,7 @@ session_start();
 $provider = new \Discord\OAuth\Discord([
     'clientId' => $discordClientId,
     'clientSecret' => $discordClientSecret,
-//    'redirectUri' => "$url/callback?original_request=".urlencode("$url/payment-details.php"),
-    'redirectUri' => "$url/callback?original_request=$url/payment-details.php",
+    'redirectUri' => "$url/checkout",
 ]);
 
 if ( !isset($_SESSION['access_token']) ) {

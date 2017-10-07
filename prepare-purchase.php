@@ -1,10 +1,5 @@
 <?php
 /**
-* Ensure that the user is logged into Discord
-*/
-require __DIR__ . '/includes/discord-user-access-token-required.php';
-
-/**
  * HoroBot / PayPal API Settings
  */
 require __DIR__ . '/store/settings.php';
@@ -18,5 +13,10 @@ if ( isset($_POST['id']) ) {
     $_SESSION['cart'] = $_POST['id']; // Prepare PayPal-Ready Information
 }
 
-header( "Location: $url/payment-details.php", 302 );
+/**
+ * Ensure that the user is logged into Discord
+ */
+require __DIR__ . '/includes/discord-user-access-token-required.php';
+
+header( "Location: $url/checkout", 302 );
 exit();
