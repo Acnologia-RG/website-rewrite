@@ -1,3 +1,4 @@
+<?php session_start(); var_dump( $_SESSION['access_token'] ); ?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -14,7 +15,7 @@
     </head>
 	<body id="top">
 		<?php include __DIR__ . '/includes/navigation.php'; ?>
-		
+
 		<div class="container">
 			<div class="row" style="margin-top: 8%">
 				<hr>
@@ -23,13 +24,13 @@
 				<div class="mol-md-5">
 			</div>
 		</div>
-		
+
 		<div class="container">
 			<center>
 				<img class="circle-icon-big animated fadeInLeft" src="./img/icon-large.png">
 			</center>
 		</div>
-		
+
 		<div class="container">
 			<div class="row" style="margin-top: 0%">
 				<hr>

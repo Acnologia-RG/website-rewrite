@@ -1,10 +1,11 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../store/settings.php';
 
 $provider = new \Discord\OAuth\Discord([
-    'clientId' => '289381714885869568',
-    'clientSecret' => 'bXQ-fZs2ud9i_6cVqUhnSgAFA6G0ePIe',
-    'redirectUri' => 'https://horobot.pw/callback',
+    'clientId' => $discordClientId,
+    'clientSecret' => $discordClientSecret,
+    'redirectUri' => "$url/callback",
 ]);
 
 if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
@@ -13,7 +14,8 @@ if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
     try {
         $user = $provider->getResourceOwner($token);
     } catch (Exception $e) {
-        header('Location: https://horobot.pw/callback?logout=1');
+        header("Location: $url/callback?logout=1", 302);
+        exit();
     }
 
     echo '<li><a href="./profile" class="btn btn-default btn-login" style="padding: 0; padding-right: 10px; padding-left: 10px"><img src="https://cdn.discordapp.com/avatars/' . $user->id . '/' . $user->avatar . '.png?size=128" width="50" height="50"> <b>' . $user->username . '</b></a></li>';

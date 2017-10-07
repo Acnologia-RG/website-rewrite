@@ -2,23 +2,25 @@
 	<body>
 		<?php
 			require_once __DIR__ . '/vendor/autoload.php';
+			require_once __DIR__ . '/store/settings.php';
 			
 			session_start();
 			
 			$provider = new \Discord\OAuth\Discord([
-				'clientId' => '289381714885869568',
-				'clientSecret' => 'bXQ-fZs2ud9i_6cVqUhnSgAFA6G0ePIe',
-				'redirectUri' => 'http://localhost:8080/callback',
+                'clientId' => $discordClientId,
+                'clientSecret' => $discordClientSecret,
+				'redirectUri' => "$url/callback",
 			]);
 			
-			$redirect = 'http://localhost:8080';
-			if (isset($_GET['redirect']) && $_GET['redirect']) {
-				$redirect = $_GET['redirect'];
+			$redirect = $url;
+			if (isset($_GET['original_request']) && $_GET['original_request']) {
+				$redirect = $_GET['original_request'];
 			}
 			
 			if (isset($_GET['logout']) && $_GET['logout']) {
 				session_destroy();
-				header('Location: ' . $redirect);
+				header('Location: ' . $redirect, 302);
+				exit();
 			}
 			
 			if (isset($_GET['code']) && $_GET['code']) {
@@ -28,7 +30,8 @@
 				
 				$_SESSION['access_token'] = $token;
 				
-				header('Location: ' . $redirect);
+				header('Location: ' . $redirect, 302);
+				exit();
 			}
 			
 			echo 'Nothing to see here. Something must have gone wrong, click <a href="https://horobot.pw">here</a> to return to the website';
