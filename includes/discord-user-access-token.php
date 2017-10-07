@@ -2,6 +2,8 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../store/settings.php';
 
+session_start();
+
 $provider = new \Discord\OAuth\Discord([
     'clientId' => $discordClientId,
     'clientSecret' => $discordClientSecret,

@@ -1,4 +1,3 @@
-<?php session_start(); var_dump( $_SESSION['access_token'] ); ?>
 <!DOCTYPE html>
 <html>
 	<head>

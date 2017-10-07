@@ -44,7 +44,7 @@ $phone              = filter_var( $_POST['phone'], FILTER_SANITIZE_NUMBER_INT );
  * Redirect to Store if no Product is Selected
  */
 if ( empty( $_POST['product'] > 0 ) ) {
-    header( "Location: $url/store.php", 302 );
+    header( "Location: $url/shop.php", 302 );
     exit();
 }
 /**

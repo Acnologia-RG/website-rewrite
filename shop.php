@@ -1,6 +1,6 @@
 <?php
 /**
- * HoroBot Store - store.php
+ * HoroBot Store - shop.php
  */
 
 /**

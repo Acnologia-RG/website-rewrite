@@ -17,7 +17,7 @@ $product = [];
  * Redirect to Store if no Product is Selected
  */
 if ( !($_SESSION['cart'] > 0) ) {
-    header( "Location: $url/store.php", 302 );
+    header( "Location: $url/shop.php", 302 );
     exit();
 }
 /**
