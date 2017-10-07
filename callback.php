@@ -8,10 +8,10 @@
 			$provider = new \Discord\OAuth\Discord([
 				'clientId' => '289381714885869568',
 				'clientSecret' => 'bXQ-fZs2ud9i_6cVqUhnSgAFA6G0ePIe',
-				'redirectUri' => 'https://horobot.pw/callback',
+				'redirectUri' => 'http://localhost:8080/callback',
 			]);
 			
-			$redirect = 'https://horobot.pw';
+			$redirect = 'http://localhost:8080';
 			if (isset($_GET['redirect']) && $_GET['redirect']) {
 				$redirect = $_GET['redirect'];
 			}

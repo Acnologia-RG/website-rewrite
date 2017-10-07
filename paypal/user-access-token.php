@@ -2,7 +2,7 @@
 /**
  * User Access Token - user-access-token.php
  */
-if (  !isset( $_SESSION['token'] ) || ( ($currentTime - $_SESSION['token']->creation_time) >= $_SESSION['token']->expires_in ) ) {
+if (  !isset( $_SESSION['paypalToken'] ) || ( ($currentTime - $_SESSION['paypalToken']->creation_time) >= $_SESSION['paypalToken']->expires_in ) ) {
     $ch = curl_init();
 
     curl_setopt($ch, CURLOPT_URL, $userTokenURL);
@@ -22,8 +22,8 @@ if (  !isset( $_SESSION['token'] ) || ( ($currentTime - $_SESSION['token']->crea
         echo 'Error:' . curl_error($ch);
     } else {
         $json = json_decode( $result );
-        $_SESSION['token'] = $json;
-        $_SESSION['token']->creation_time = $currentTime;
+        $_SESSION['paypalToken'] = $json;
+        $_SESSION['paypalToken']->creation_time = $currentTime;
         echo $result;
     }
 

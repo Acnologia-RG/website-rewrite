@@ -6,12 +6,12 @@
 /**
  * HoroBot / PayPal API Settings
  */
-require __DIR__ . '/store/settings.php';
+require_once __DIR__ . '/store/settings.php';
 
 /**
  * PayPal API Autoload
  */
-require __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 // API Context:
 $apiContext = new \PayPal\Rest\ApiContext(
@@ -35,4 +35,4 @@ $apiContext->setConfig(
 /**
  * Set User Access Token (if not already set)
  */
-require __DIR__ . '/paypal/user-access-token.php';
+require_once __DIR__ . '/paypal/user-access-token.php';

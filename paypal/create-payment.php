@@ -113,7 +113,7 @@ curl_setopt($ch, CURLOPT_POST, 1);
 
 $headers = array();
 $headers[] = "Content-Type: application/json";
-$headers[] = "Authorization: Bearer " . $_SESSION['token']->access_token;
+$headers[] = "Authorization: Bearer " . $_SESSION['paypalToken']->access_token;
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
 /**
