@@ -53,3 +53,12 @@ if (curl_errno($ch)) {
  * Close cURL Operations
  */
 curl_close($ch);
+
+/**
+ * Update User in Database
+ */
+if ( $_SESSION['payment']->state === 'approved' ) {
+
+    $_SESSION['payment']->transactions->;
+
+}

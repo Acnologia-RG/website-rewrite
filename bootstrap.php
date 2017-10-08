@@ -4,14 +4,14 @@
  */
 
 /**
- * HoroBot / PayPal API Settings
- */
-require_once __DIR__ . '/store/settings.php';
-
-/**
  * PayPal API Autoload
  */
 require_once __DIR__ . '/vendor/autoload.php';
+
+/**
+ * HoroBot / PayPal API Settings
+ */
+require_once __DIR__ . '/store/settings.php';
 
 // API Context:
 $apiContext = new \PayPal\Rest\ApiContext(

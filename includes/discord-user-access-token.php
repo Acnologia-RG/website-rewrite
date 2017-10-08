@@ -15,6 +15,7 @@ if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
     $user = null;
     try {
         $user = $provider->getResourceOwner($token);
+        $_SESSION['discordId'] = $user->getId();
     } catch (Exception $e) {
         header("Location: $url/callback?logout=1", 302);
         exit();

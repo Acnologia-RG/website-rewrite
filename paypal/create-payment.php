@@ -69,6 +69,7 @@ $requestJSON =
                     }
                 },
                 "description": "'.$paymentDescription.'",
+                "custom": "'.$_SESSION['discordId'].'"
                 "invoice_number": "'.$invoiceNumber.'",
                 "payment_options":
                 {
