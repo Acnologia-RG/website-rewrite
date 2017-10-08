@@ -54,7 +54,7 @@ unset($_SESSION['cart']);
                                 <input type="hidden" name="id" value="<?= base64_encode( $id ) ?>">
                                 <input type="submit" name="submit" value="Purchase">
                             </form>
-                        </liclass>
+                        </li>
                         <?php
                     }
                     ?>

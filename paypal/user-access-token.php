@@ -24,9 +24,8 @@ if (  !isset( $_SESSION['paypalToken'] ) || ( ($currentTime - $_SESSION['paypalT
         $json = json_decode( $result );
         $_SESSION['paypalToken'] = $json;
         $_SESSION['paypalToken']->creation_time = $currentTime;
-        echo $result;
     }
 
     curl_close ($ch);
 }
-var_dump($_SESSION['paypalToken']);
+

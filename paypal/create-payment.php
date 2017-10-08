@@ -70,7 +70,7 @@ $requestJSON =
                     }
                 },
                 "description": "'.$paymentDescription.'",
-                "custom": "'.$_SESSION['discordId'].'"
+                "custom": "'.$_SESSION['discordId'].'",
                 "invoice_number": "'.$invoiceNumber.'",
                 "payment_options":
                 {
@@ -123,11 +123,13 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
  */
 $result = curl_exec($ch);
 if (curl_errno($ch)) {
-    echo 'Error:' . curl_error($ch);
+    echo 'cURL Error: ' . curl_error($ch);
+    error_log( 'cURL Error: ' . curl_error($ch) );
 } else {
-    echo $result;
+    echo json_encode($result);
     $resultJSON = json_decode($result);
     $_SESSION['confirmation'] = $resultJSON;
+    error_log($result);
 }
 
 /**

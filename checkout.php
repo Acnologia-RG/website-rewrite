@@ -109,7 +109,7 @@ else {
 
                             payment: function() {
                                 return paypal.request.post(CREATE_PAYMENT_URL).then(function(data) {
-                                    return data.id;
+                                    return JSON.parse(data).id;
                                 });
                             },
 
