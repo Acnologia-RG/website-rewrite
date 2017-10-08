@@ -89,7 +89,7 @@ else {
                             <tr>
                                 <td><?= $product['name'] ?></td>
                                 <td><?= $product['description'] ?></td>
-                                <td>$<?= $product['price'] ?>(USD)</td>
+                                <td>€<?= $product['price'] ?>(EUR)</td>
                             </tr>
                             </tbody>
                         </table>
@@ -118,7 +118,45 @@ else {
                                     paymentID: data.paymentID,
                                     payerID:   data.payerID
                                 }).then(function() {
-                                    console.log('Payment Complete.');
+                                    // Remove Purchase Button
+                                    var paypalButton = document.getElementById( 'paypal-button' );
+                                    paypalButton.parentElement.removeChild( paypalButton );
+
+                                    // Create Success Elements/Text
+                                    var paypalMessageOverlay = document.createElement( 'DIV' );
+                                    var paypalMessageContainer = document.createElement( 'ARTICLE' );
+                                    var paypalMessageTitle = document.createElement( 'H2' );
+                                    var paypalMessageTitleText = document.createTextNode( 'PayPal Transaction Details' );
+                                    var paypalMessageParagraph = document.createElement( 'P' );
+                                    var paypalMessageParagraphText = document.createTextNode( 'Your payment was successful, thank you very much!' );
+                                    var paypalMessageButton = document.createElement( 'BUTTON' );
+                                    var paypalMessageButtonText = document.createTextNode( 'Okay' );
+
+                                    // Prepare Success Elements/Text
+                                    paypalMessageTitle.appendChild( paypalMessageTitleText );
+                                    paypalMessageContainer.appendChild( paypalMessageTitle );
+                                    paypalMessageParagraph.appendChild( paypalMessageParagraphText );
+                                    paypalMessageContainer.appendChild( paypalMessageParagraph );
+                                    paypalMessageButton.appendChild( paypalMessageButtonText );
+                                    paypalMessageContainer.appendChild( paypalMessageButton );
+                                    paypalMessageOverlay.appendChild( paypalMessageContainer );
+
+                                    // Add ID to Container
+                                    paypalMessageOverlay.setAttribute( 'id', 'paypal-message' );
+
+                                    // Add Animation Classes
+                                    paypalMessageOverlay.setAttribute( 'class', 'animated fadeIn' );
+                                    paypalMessageContainer.setAttribute( 'class', 'animated fadeInBottom' );
+
+                                    // Add Event Listener to Button
+                                    paypalMessageButton.addEventListener( 'click', function(){
+                                        window.location = '<?= $url ?>';
+                                    });
+
+                                    // Add Message to HTML Document (wait 1 second)
+                                    setTimeout(function(){
+                                        document.body.appendChild( paypalMessageOverlay );
+                                    }, 1000);
                                 });
                             }
 

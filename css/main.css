@@ -272,6 +272,7 @@ h1 {
 	color: #fc4e1b;
 	border: 1px solid transparent;
 	border-radius: 3px;
+    transition: 0.3s ease all;
 }
 .products [type="submit"]:hover {
 	border-radius: 0;
@@ -295,6 +296,50 @@ h1 {
 .checkout th {
 	border-bottom: 1px solid #c4c4c4;
 }
+#paypal-message {
+    content: '';
+    display: block;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1040;
+}
+#paypal-message article {
+    position: relative;
+    background: #fff;
+    width: 100%;
+    max-width: 300px;
+    margin: 0;
+    padding: 8px 16px;
+    top: 50%;
+    right: auto;
+    bottom: auto;
+    left: 50%;
+    transform: translate( -50%, -50% );
+}
+#paypal-message h2 {
+    margin: 16px 0 16px;
+}
+#paypal-message p {
+    margin-bottom: 16px;
+}
+#paypal-message button {
+    display: block;
+    width: 100%;
+    background: #fc4e1b;
+    color: #fff;
+    padding: 16px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    transition: 0.3s ease all;
+}
+#paypal-message button:hover {
+    border-radius: 0;
+}
+
 
 @media screen and (max-width: 1000px) {
 	.navbar-collapse.collapsing,

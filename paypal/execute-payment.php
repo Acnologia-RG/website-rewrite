@@ -68,28 +68,23 @@ unset($_SESSION['payment']);
 /**
  * Update User in Database
  */
-error_log('show JSON:');
-error_log(json_encode($resultJSON));
-error_log('curl complete');
 if ( $resultJSON->state === 'approved' ) {
     global $productsArray;
 
 //    $payerID = $resultJSON->payer->payer_info->payer_id;
     $discordID = (int)$resultJSON->transactions[0]->custom;
-    error_log('id: '.$discordID);
     $gems = $productsArray[$resultJSON->transactions[0]->item_list->items[0]->sku]['gems'];
 
     try {
         if ( $connection = pg_connect( $dbConnectionString ) ) {
-            $query = 'UPDATE users.user SET foxGems=$1 WHERE id=$2;';
+            $query = 'UPDATE users.user SET foxGems=foxGems + $1 WHERE id=$2;';
             $request = pg_prepare( $connection, 'payment', $query );
             if ( $request ) {
-                pg_execute( $connection, 'payment', array((int)100, (int)184097684024590336) );
-                error_log( 'Request executed.' );
+                pg_execute( $connection, 'payment', array((int)$gems, (int)$discordID) );
             }
             pg_close( $connection );
         } else {
-            error_log('ERRORERRORERROR');
+            error_log('No databse connection established.');
         }
     } catch( Exception $e ) {
         echo $e;
