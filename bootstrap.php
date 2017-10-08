@@ -36,3 +36,11 @@ $apiContext->setConfig(
  * Set User Access Token (if not already set)
  */
 require_once __DIR__ . '/paypal/user-access-token.php';
+
+/**
+ * Log Errors
+ */
+if ( $debug ) {
+    ini_set("log_errors", 1);
+    ini_set("error_log", "/tmp/php-error.log");
+}

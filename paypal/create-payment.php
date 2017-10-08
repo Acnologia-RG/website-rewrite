@@ -6,7 +6,7 @@
 /**
 * PayPal PHP API Libraries & Settings
 */
-require '../bootstrap.php';
+require __DIR__ . '/../bootstrap.php';
 
 /**
  * Redirect to Store if no Product is Selected
@@ -19,7 +19,7 @@ if ( empty( $_SESSION['cart'] > 0 ) ) {
 /**
  * Prepare Invoice Number
  */
-$invoiceNumber = rand( (int)1000000000, (int)9999999999 );
+$invoiceNumber = uniqid();
 if ( $_SESSION['invoiceNumber'] ) {
     $invoiceNumber = $_SESSION['invoiceNumber'];
 } else {
@@ -29,6 +29,7 @@ if ( $_SESSION['invoiceNumber'] ) {
 /**
  * Set Product Values
  */
+global $productsArray;
 $productId = $_SESSION['cart'];
 $product = $productsArray[$productId];
 $productName = $product['name'];

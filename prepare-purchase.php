@@ -1,8 +1,8 @@
 <?php
 /**
- * HoroBot / PayPal API Settings
+ * PayPal PHP API Libraries & Settings
  */
-require __DIR__ . '/store/settings.php';
+require __DIR__ . '/bootstrap.php';
 
 /**
  * Define Necessary Values;

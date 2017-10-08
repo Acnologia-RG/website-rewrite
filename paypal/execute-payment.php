@@ -6,7 +6,7 @@
 /**
  * PayPal PHP API Libraries & Settings
  */
-require '../bootstrap.php';
+require __DIR__ . '/../bootstrap.php';
 
 /**
  * Collect Payer ID
@@ -41,6 +41,7 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
  * Echo Error or Result
  */
 $result = curl_exec($ch);
+$resultJSON = null;
 if (curl_errno($ch)) {
     echo 'Error:' . curl_error($ch);
 } else {
@@ -57,8 +58,22 @@ curl_close($ch);
 /**
  * Update User in Database
  */
-if ( $_SESSION['payment']->state === 'approved' ) {
+if ( $resultJSON->state === 'approved' ) {
+    global $productsArray;
 
-    $_SESSION['payment']->transactions->;
+//    $payerID = $resultJSON->payer->payer_info->payer_id;
+    $discordID = (int)$resultJSON->transactions->custom;
+    $gems = $productsArray[$resultJSON->transactions[0]->item_list->items->sku];
 
+    try {
+        $connection = pg_connect( $dbConnectionString );
+        $query = "UPDATE users.user SET foxGems=foxGems + $1 WHERE id=$2";
+        $request = pg_prepare( $connection, 'submit', $query );
+        if ( $request ) {
+            pg_execute( $connection, 'submit', [$gems,$discordID] );
+        }
+        pg_close( $connection );
+    } catch( Exception $e ) {
+        echo $e;
+    }
 }

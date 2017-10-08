@@ -6,7 +6,7 @@
 /**
  * HoroBot / PayPal API Settings
  */
-require __DIR__ . '/store/settings.php';
+require __DIR__ . '/bootstrap.php';
 
 /**
  * Ensure Discord Login
@@ -59,58 +59,84 @@ else {
 </head>
 <body>
     <?php include __DIR__ . '/includes/navigation.php'; ?>
-    <h1>Payment Details</h1>
-    <h2>
-        Product Information
-    </h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Product Name</th>
-                <th>Product Description</th>
-                <th>Product Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><?= $product['name'] ?></td>
-                <td><?= $product['description'] ?></td>
-                <td>$<?= $product['price'] ?>(USD)</td>
-            </tr>
-        </tbody>
-    </table>
-    <h2>
-        Payment
-    </h2>
-    <div id="paypal-button"></div>
-    <script>
-        var CREATE_PAYMENT_URL  = '<?= $url ?>/paypal/create-payment.php';
-        var EXECUTE_PAYMENT_URL = '<?= $url ?>/paypal/execute-payment.php';
 
-        paypal.Button.render({
+    <div class="container">
+        <div class="row" style="margin-top: 8%">
+            <hr>
+        </div>
+        <div class="row">
+            <div class="mol-md-5">
+            </div>
+        </div>
 
-            env: 'sandbox', // Or 'sandbox'
+        <div class="container checkout">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Payment Details</h1>
+                    <h2>
+                        Product Information
+                    </h2>
+                    <aside>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Product Description</th>
+                                <th>Product Price</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><?= $product['name'] ?></td>
+                                <td><?= $product['description'] ?></td>
+                                <td>$<?= $product['price'] ?>(USD)</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </aside>
+                    <h2>
+                        Payment
+                    </h2>
+                    <div id="paypal-button"></div>
+                    <script>
+                        var CREATE_PAYMENT_URL  = '<?= $url ?>/paypal/create-payment.php';
+                        var EXECUTE_PAYMENT_URL = '<?= $url ?>/paypal/execute-payment.php';
 
-            commit: true, // Show a 'Pay Now' button
+                        paypal.Button.render({
 
-            payment: function() {
-                return paypal.request.post(CREATE_PAYMENT_URL).then(function(data) {
-                    return data.id;
-                });
-            },
+                            env: 'sandbox',
+                            commit: true, // Show a 'Pay Now' button
 
-            onAuthorize: function(data) {
-                return paypal.request.post(EXECUTE_PAYMENT_URL, {
-                    paymentID: data.paymentID,
-                    payerID:   data.payerID
-                }).then(function() {
-                    console.log('Payment Complete.');
-                });
-            }
+                            payment: function() {
+                                return paypal.request.post(CREATE_PAYMENT_URL).then(function(data) {
+                                    return data.id;
+                                });
+                            },
 
-        }, '#paypal-button');
-    </script>
-    <?php include_once __DIR__ . '/includes/assets.php'; ?>
+                            onAuthorize: function(data) {
+                                return paypal.request.post(EXECUTE_PAYMENT_URL, {
+                                    paymentID: data.paymentID,
+                                    payerID:   data.payerID
+                                }).then(function() {
+                                    console.log('Payment Complete.');
+                                });
+                            }
+
+                        }, '#paypal-button');
+                    </script>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row" style="margin-top: 0%">
+                <hr>
+            </div>
+            <div class="row">
+                <div class="mol-md-5">
+                </div>
+        </div>
+        <?php include_once __DIR__ . '/includes/assets.php'; ?>
 </body>
 </html>
 

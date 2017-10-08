@@ -4,9 +4,9 @@
  */
 
 /**
- * HoroBot / PayPal API Settings
+ * PayPal PHP API Libraries & Settings
  */
-require __DIR__ . '/store/settings.php';
+require __DIR__ . '/bootstrap.php';
 
 /**
  * Empty the Cart Value
@@ -39,6 +39,7 @@ unset($_SESSION['cart']);
                 <h1 class="animated fadeInLeft">Premium Packages</h1>
                 <ul>
                     <?php
+                    global $productsArray;
                     foreach ( $productsArray as $id => $product ) {
                         ?>
                         <li class="animated fadeInRight">

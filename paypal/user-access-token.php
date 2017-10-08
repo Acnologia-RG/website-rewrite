@@ -29,3 +29,4 @@ if (  !isset( $_SESSION['paypalToken'] ) || ( ($currentTime - $_SESSION['paypalT
 
     curl_close ($ch);
 }
+var_dump($_SESSION['paypalToken']);

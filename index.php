@@ -12,7 +12,7 @@
         <meta name="twitter:card" value="HoroBot - a very capable and helpful Discord bot" />
         <?php require_once __DIR__ . '/includes/head.php'; ?>
     </head>
-	<body id="top"><?php session_start();var_dump($_SESSION['payment']);var_dump($_SESSION['paypalToken']); ?>
+	<body id="top">
 		<?php include __DIR__ . '/includes/navigation.php'; ?>
 
 		<div class="container">
