@@ -9,21 +9,21 @@
 require __DIR__ . '/../bootstrap.php';
 
 /**
- * Redirect to Store if no Product is Selected
- */
-if ( empty( $_SESSION['cart'] > 0 ) ) {
-    header( "Location: $url", 302 );
-    exit();
-}
-
-/**
  * Prepare Invoice Number
  */
 $invoiceNumber = uniqid();
-if ( $_SESSION['invoiceNumber'] ) {
+if ( isset($_SESSION['invoiceNumber']) ) {
     $invoiceNumber = $_SESSION['invoiceNumber'];
 } else {
     $_SESSION['invoiceNumber'] = $invoiceNumber;
+}
+
+/**
+ * Redirect to Store if no Product is Selected
+ */
+if ( $_SESSION['cart'] <= 0 ) {
+    header( "Location: $url", 302 );
+    exit();
 }
 
 /**
@@ -129,7 +129,6 @@ if (curl_errno($ch)) {
     echo json_encode($result);
     $resultJSON = json_decode($result);
     $_SESSION['confirmation'] = $resultJSON;
-    error_log($result);
 }
 
 /**
