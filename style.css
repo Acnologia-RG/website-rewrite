@@ -1,0 +1,488 @@
+/*
+Theme Name: Maya Winterfox
+Theme URI: http://warren.codes/
+Author: Warren Uhrich
+Author URI: http://warren.codes/
+Description: The theme used for the Maya Winterfox website.
+Version: 1.0
+Tags:
+Text Domain: maya
+*/
+
+/**
+ * Colours
+ * ==================================
+ * Black:       rgb( 52, 52, 52 );
+ * Grey:        rgb( 76, 76, 76 );
+ * Silver:      rgb( 244, 244, 244 );
+ * Red:         rgb( 223, 77, 78 );
+ * Crimson:     rgb( 141, 69, 72 );
+ * Blue:        rgb( 131, 234, 249 );
+ * Brown:       rgb( 106, 87, 72 );
+ */
+
+/**
+ * Fonts
+ */
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+/**
+ * Browser Reset
+ */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Raleway', Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    line-height: 1.2;
+    font-weight: normal;
+    color: rgb( 52, 52, 52 );
+}
+
+/**
+ * Animations
+ */
+.fade-in {
+    animation: fade-in 0.3s 1;
+}
+@keyframes fade-in {
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.slide-in-from-top {
+    animation: slide-in-from-top 0.3s 1;
+}
+@keyframes slide-in-from-top {
+    0%   { transform: translateY( -100% ); }
+    100% { transform: translateY( 0 ); }
+}
+
+.slide-in-from-bottom {
+    animation: slide-in-from-bottom 0.3s 1;
+}
+@keyframes slide-in-from-bottom {
+    0%   { transform: translateY( 100% ); }
+    100% { transform: translateY( 0 ); }
+}
+
+.slide-in-from-left {
+    animation: slide-in-from-left 0.3s 1;
+}
+@keyframes slide-in-from-left {
+    0%   { transform: translateX( -100% ); }
+    100% { transform: translateX( 0 ); }
+}
+
+.slide-in-from-right {
+    animation: slide-in-from-right 0.3s 1;
+}
+@keyframes slide-in-from-right {
+    0%   { transform: translateX( 100% ); }
+    100% { transform: translateX( 0 ); }
+}
+
+/**
+ * HTML / Body
+ */
+html,
+body
+{
+    display: block;
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    animation: fade-in 0.3s 1, slide-in-from-top 0.3s 1;
+}
+
+/**
+ * General Image
+ */
+img {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    pointer-events: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+/**
+ * General Link
+ */
+a {
+    color: rgb( 131, 234, 249 );
+    text-decoration: none;
+}
+
+/**
+ * Button
+ */
+.button {
+    display: inline-block;
+    color: rgb( 52, 52, 52 );
+    border: 1px solid rgb( 52, 52, 52 );
+    background: rgb( 131, 234, 249 );
+    padding: 0.5rem 1rem;
+}
+
+.button-hollow {
+    display: inline-block;
+    color: rgb( 131, 234, 249 );
+    border: 1px solid rgb( 131, 234, 249 );
+    background: rgba( 0, 0, 0, 0.1 );
+    padding: 0.5rem 1rem;
+    transition: 0.3s ease all;
+}
+.button-hollow:hover {
+    background: rgba( 131, 234, 249 );
+    color: rgb( 52, 52, 52 );
+    transition: 0.3s ease all;
+}
+
+/**
+ * Block Quote
+ */
+blockquote > p {
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+    font-style: italic;
+}
+
+/**
+ * Header
+ */
+header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    background: rgb( 52, 52, 52 );
+    min-height: 1.6rem;
+    overflow: hidden;
+    z-index: 2;
+}
+
+header h1 {
+    color: rgb( 244, 244, 244 );
+    padding: 0.2em 0.5em;
+    cursor: default;
+}
+
+header small::before {
+    content: '|';
+    color: rgb( 76, 76, 76 );
+}
+header small {
+    font-size: 12px;
+    color: rgb( 223, 77, 78 );
+    vertical-align: middle;
+}
+
+/**
+ * Navigation
+ */
+header nav button {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: auto;
+    overflow: hidden;
+    width: 4.6rem;
+    height: 1.6rem;
+    line-height: 1.6rem;
+    border: none;
+    cursor: pointer;
+    background: rgb( 131, 234, 249 );
+}
+header nav button::before {
+    content: 'Menu';
+    display: block;
+    height: 1.6rem;
+    font-size: 14px;
+}
+header nav button:focus {
+    pointer-events: none;
+}
+header nav > div {
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 0vh;
+    transition: max-height 0.5s linear;
+}
+header nav button:focus + div {
+    max-height: calc( 100vh - 1.6rem );
+    transition: max-height 0.5s linear;
+}
+header nav > div ul {
+    list-style: none;
+    text-align: right;
+}
+header nav > div li:not(:last-of-type) {
+    border-bottom: 1px solid rgb( 76, 76, 76 );
+}
+header nav > div a {
+    display: block;
+    width: 100%;
+    padding: 1rem 0.5rem;
+    font-size: 16px;
+    overflow: hidden;
+}
+header nav > div .current_page_item a {
+    color: rgb( 244, 244, 244 );
+}
+header nav > div a::after,
+.current_page_item a::after
+{
+    content: '';
+    display: block;
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: auto;
+    height: 0;
+    background: rgb( 131, 234, 249 );
+    transition: 0.3s ease height, 0.3s ease bottom;
+}
+header nav > div a:hover::after,
+.current_page_item a::after {
+    bottom: 2px;
+    height: 2px;
+    transition: 0.3s ease height, 0.3s ease bottom;
+}
+.current_page_item a::after {
+    background: rgb( 244, 244, 244 );
+}
+
+@media screen and ( min-width: 60em ) {
+    header nav button {
+        display: none;
+    }
+
+    header nav > div {
+        max-height: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: auto;
+        left: auto;
+    }
+    header nav > div > ul > li {
+        display: inline-block;
+        float: left;
+        width: auto;
+    }
+    header nav > div > ul > li:last-of-type {
+        margin-right: 1rem;
+    }
+    header nav > div > li:not(:last-of-type) {
+        border: none;
+    }
+    header nav > div a {
+        display: inline-block;
+        width: auto;
+        padding: 0 0.6rem;
+        line-height: 1.6rem;
+        font-size: 14px;
+    }
+}
+
+/**
+ * Main
+ */
+main {
+    padding-top: 1.6rem;
+}
+
+/**
+ * Feature
+ */
+.feature {
+    display: block;
+    position: relative;
+}
+
+.feature img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.feature .button,
+.feature .button-hollow
+{
+    position: absolute;
+    top: auto;
+    right: auto;
+    bottom: 15%;
+    left: 50%;
+    transform: translateX( -50% );
+}
+
+/**
+ * Article
+ */
+article {
+    background: rgb( 76, 76, 76 );
+    padding: 2em;
+}
+article p {
+    color: rgb( 244, 244, 244 );
+    font-size: 16px;
+    padding-bottom: 1em;
+    line-height: 1.5;
+}
+article p a,
+article p span
+{
+    font-size: 16px;
+}
+article h2 {
+    color: rgb( 223, 77, 78 );
+    font-size: 24px;
+}
+
+article h3 {
+    color: rgb( 223, 77, 78 );
+    font-size: 18px;
+}
+
+article h4 {
+    color: rgb( 223, 77, 78 );
+    font-size: 16px;
+}
+article h4::after {
+    content: '';
+    display: block;
+    height: 2px;
+    background: rgb( 223, 77, 78 );
+    width: 30%;
+}
+
+@media screen and ( min-width: 60em ) {
+    article > * {
+        max-width: 680px;
+        margin: 0 auto;
+    }
+}
+
+/**
+ * Footer
+ */
+footer {
+    background: rgb( 52, 52, 52 );
+}
+footer > ul {
+    list-style: none;
+}
+footer > ul > li {
+    padding: 2rem;
+}
+footer * {
+    color: rgb( 244, 244, 244 );
+    font-size: 12px;
+    line-height: 1.5;
+}
+footer h2 {
+    font-weight: bold;
+    color: rgb( 256, 256, 256 );
+    border-bottom: 2px solid rgb( 256, 256, 256 );
+    padding-bottom: 0.2rem;
+    margin-bottom: 0.2rem;
+}
+
+@media screen and (min-width: 60em) {
+
+    footer > ul {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    footer > ul::after {
+        content: '';
+        display: block;
+        float: none;
+        clear: both;
+    }
+
+    footer > ul > li {
+        float: left;
+        width: 25%;
+    }
+}
+
+/**
+ * Contributors
+ */
+.contributors-container {
+    background: rgb( 106, 87, 72 );
+    /*background: rgb( 141, 69, 72 );*/
+    padding: 2rem 0.5rem;
+}
+.contributors-container > * {
+    max-width: 900px;
+    margin: 0 auto;
+}
+.contributors {
+    list-style: none;
+}
+.contributors-container h2 {
+    font-size: 24px;
+    color: rgb( 223, 77, 78 );
+    padding-bottom: 2rem;
+}
+.contributor {
+    text-align: center;
+    padding: 1rem;
+}
+.contributor a {
+    display: block;
+    transition: 0.3s ease transform;
+}
+.contributor a:hover {
+    transform: scale( 1.1 );
+    transition: 0.3s ease transform;
+}
+.contributor a img {
+    border-color: rgb( 131, 234, 249 );
+}
+.contributor img {
+    display: block;
+    overflow: hidden;
+    border: 4px solid rgb( 223, 77, 78 );
+    border-radius: 50%;
+    margin: 0 auto 0.5rem;
+    width: 136px;
+    height: 136px;
+}
+.contributor a h3 {
+    color: rgb( 131, 234, 249 );
+}
+.contributor h3 {
+    margin-bottom: 0.25rem;
+}
+.contributor h3,
+.contributor p
+{
+    color: rgb( 244, 244, 244 );
+}
+.contributor p {
+    font-size: 12px;
+}
+
+@media screen and ( min-width: 60em ) {
+
+    .contributor {
+        box-sizing: border-box;
+        display: inline-block;
+        width: 30%;
+        padding-top: 0;
+        vertical-align: top;
+    }
+}
