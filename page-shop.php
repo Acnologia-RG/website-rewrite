@@ -16,28 +16,31 @@ while ( have_posts() ) : the_post();
     <article>
         <?php the_content(); ?>
     </article>
-    <svg>
-        <use xlink:href="#gem-orange"></use>
-    </svg>
 
     <?php // Display Products
     global $productsArray;
+    global $currencyCode;
     if ( isset( $productsArray ) && !empty( $productsArray ) ) : ?>
     <section class="products">
         <ul>
-            <?php foreach ( $products as $product ) : ?>
+            <?php foreach ( $productsArray as $id => $product ) : ?>
                 <li>
                     <form method="POST" action="#">
                         <h3>
                             <?= $product['name'] ?>
                             <?= $product['price'] ?>
-                            (EUR)
+                            (<?= $currencyCode ?>)
                         </h3>
+                        <aside>
+                            <svg viewBox="0 0 149.652 103.551">
+                                <use xlink:href="#<?= $product['icon'] ?>"></use>
+                            </svg>
+                        </aside>
                         <p>
-                            <aside>
-                                <img src="" alt="Fox Gem" title="Fox Gem">
-                            </aside>
+                            <?= $product['description'] ?>
                         </p>
+                        <input type="hidden" name="id" value="<?= $id ?>">
+                        <input class="button" type="submit" name="submit" value="Purchase">
                     </form>
                 </li>
             <?php endforeach; ?>

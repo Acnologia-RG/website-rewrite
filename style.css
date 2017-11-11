@@ -126,6 +126,11 @@ a {
     border: 1px solid rgb( 52, 52, 52 );
     background: rgb( 131, 234, 249 );
     padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+.button:hover {
+    background: rgb( 256, 256, 256 );
 }
 
 .button-hollow {
@@ -135,6 +140,7 @@ a {
     background: rgba( 0, 0, 0, 0.1 );
     padding: 0.5rem 1rem;
     transition: 0.3s ease all;
+    cursor: pointer
 }
 .button-hollow:hover {
     background: rgba( 131, 234, 249, 1 );
@@ -494,6 +500,115 @@ footer h2 {
         width: 30%;
         padding-top: 0;
         vertical-align: top;
+    }
+}
+
+/**
+ * Products
+ */
+.products {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 1rem 0.5rem;
+}
+
+.products ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0 auto;
+    width: 100%;
+    min-width: 0;
+    max-width: 980px;
+    list-style: none;
+}
+
+.products li {
+    width: calc( 100% - 1rem );
+    text-align: center;
+    margin: 0 0.5rem 1rem;
+    padding: 0 0.5rem;
+    background: rgb( 52, 52, 52 );
+}
+
+.products li * {
+    color: rgb( 256, 256, 256 );
+}
+
+.products h3 {
+    width: calc(100% + 1rem);
+    padding: 0.5rem;
+    background: rgb( 223, 77, 78 );
+    font-size: 18px;
+    margin-bottom: 1rem;
+    position: relative;
+    top: auto;
+    right: 0.5rem;
+    bottom: auto;
+    left: auto;
+}
+
+.products p {
+    margin: 0 0 1rem;
+    font-size: 0.75rem;
+}
+
+.products aside {
+    display: block;
+    margin: 0 auto 1rem;
+    background: rgb( 256, 256, 256 );
+    border-radius: 50%;
+    width: 65%;
+    height: 0;
+    padding-bottom: 65%;
+}
+
+.products svg {
+    display: block;
+    width: 75%;
+    position: relative;
+    top: calc(12.5vw + 0.5rem);
+    right: auto;
+    bottom: auto;
+    left: 12.5%;
+}
+
+.products [type="submit"] {
+    display: block;
+    width: calc(100% + 1rem);
+    position: relative;
+    top: auto;
+    right: 0.5rem;
+    bottom: auto;
+    left: auto;
+    color: rgb( 52, 52, 52 );
+}
+
+@media screen and ( min-width: 35em ) {
+    .products li {
+        width: calc( 50% - 1rem );
+    }
+
+    .products svg {
+        top: calc(6.25vw + 0.5rem);
+    }
+}
+
+@media screen and ( min-width: 60em ) {
+    .products li {
+        width: calc( 25% - 1rem );
+    }
+
+    .products svg {
+        top: calc(3.125vw + 0.5rem);
+    }
+}
+
+@media screen and ( min-width: 65em ) {
+    .products svg {
+        top: 2.15rem;
     }
 }
 
