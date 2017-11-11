@@ -16,8 +16,35 @@ while ( have_posts() ) : the_post();
     <article>
         <?php the_content(); ?>
     </article>
+    <svg>
+        <use xlink:href="#gem-orange"></use>
+    </svg>
 
-    <?php
+    <?php // Display Products
+    global $productsArray;
+    if ( isset( $productsArray ) && !empty( $productsArray ) ) : ?>
+    <section class="products">
+        <ul>
+            <?php foreach ( $products as $product ) : ?>
+                <li>
+                    <form method="POST" action="#">
+                        <h3>
+                            <?= $product['name'] ?>
+                            <?= $product['price'] ?>
+                            (EUR)
+                        </h3>
+                        <p>
+                            <aside>
+                                <img src="" alt="Fox Gem" title="Fox Gem">
+                            </aside>
+                        </p>
+                    </form>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </section>
+    <?php endif;
+
 endwhile; // End of the loop.
 ?>
 
