@@ -56,6 +56,11 @@ include_once __DIR__ . '/classes/autoload.php';
 include_once __DIR__ . '/utilities/autoload.php';
 
 /**
+ * Load Includes
+ */
+include_once __DIR__ . '/includes/autoload.php';
+
+/**
  * Load Products Array
  */
 include_once __DIR__ . '/data/products.php';
