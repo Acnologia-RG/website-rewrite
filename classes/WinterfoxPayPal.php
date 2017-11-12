@@ -1,7 +1,7 @@
 <?php
 include_once __DIR__ . '/../settings/general.php';
 include_once __DIR__ . '/../data/products.php';
-class PayPal {
+class WinterfoxPayPal {
     private $paypalToken;
 
     public function __construct() {
@@ -88,7 +88,7 @@ class PayPal {
         /**
          * Set Product Values
          */
-        $productId = $_SESSION['cart'];
+        $productId = $_SESSION['Store'];
         $product = $productsArray[$productId];
         $productName = $product['name'];
         $productDescription = $product['description'];
@@ -252,7 +252,7 @@ class PayPal {
          */
         unset($_SESSION['invoiceNumber']);
         unset($_SESSION['paypalToken']);
-        unset($_SESSION['cart']);
+        unset($_SESSION['Store']);
         unset($_SESSION['confirmation']);
         unset($_SESSION['payment']);
 

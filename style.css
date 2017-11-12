@@ -563,6 +563,7 @@ footer h2 {
     width: 65%;
     height: 0;
     padding-bottom: 65%;
+    border: 4px solid rgb( 223, 77, 78 );
 }
 
 .products svg {
@@ -610,6 +611,80 @@ footer h2 {
     .products svg {
         top: 2.15rem;
     }
+}
+
+/**
+ * Checkout
+ */
+.checkout {
+    margin: 0 auto 1rem;
+    padding: 0 1rem;
+    max-width: 1064px;
+}
+.checkout::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 0;
+    float: none;
+    clear: both;
+}
+
+.checkout table {
+    display: table;
+    box-sizing: content-box;
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid rgb( 52, 52, 52 );
+    border-radius: 3px;
+    margin-bottom: 1rem;
+}
+.checkout thead,
+.checkout tbody
+{
+    display: table-row-group;
+    box-sizing: content-box;
+}
+.checkout tr {
+    display: table-row;
+    box-sizing: content-box;
+    border: 1px solid rgb( 52, 52, 52 );
+}
+.checkout th,
+.checkout td
+{
+    display: table-cell;
+    box-sizing: content-box;
+    color: rgb( 256, 256, 256 );
+    text-align: left;
+    padding: 0.25rem 0.5rem;
+    border-right: 1px solid rgb( 52, 52, 52 );
+    border-bottom: 1px solid rgb( 52, 52, 52 );
+}
+.checkout th:last-child,
+.checkout td:last-child
+{
+    border-right: none;
+    text-align: right;
+}
+.checkout th *,
+.checkout td *
+{
+    vertical-align: middle;
+}
+.checkout th {
+    color: rgb( 223, 77, 78 );
+}
+.checkout tr:last-child td {
+    border-bottom: none;
+}
+.checkout svg {
+    width: 2rem;
+    height: 2rem;
+}
+
+.checkout [type="submit"] {
+    float: right;
 }
 
 /**

@@ -19,15 +19,17 @@ while ( have_posts() ) : the_post();
 
     <?php // Display Products
     global $productsArray;
+    global $currencySymbol;
     global $currencyCode;
     if ( isset( $productsArray ) && !empty( $productsArray ) ) : ?>
     <section class="products">
         <ul>
             <?php foreach ( $productsArray as $id => $product ) : ?>
                 <li>
-                    <form method="POST" action="#">
+                    <form method="POST" action="<?= site_url() ?>/checkout">
                         <h3>
                             <?= $product['name'] ?>
+                            <?= $currencySymbol ?>
                             <?= $product['price'] ?>
                             (<?= $currencyCode ?>)
                         </h3>
@@ -40,6 +42,7 @@ while ( have_posts() ) : the_post();
                             <?= $product['description'] ?>
                         </p>
                         <input type="hidden" name="id" value="<?= $id ?>">
+                        <input type="hidden" name="shop" value="gem">
                         <input class="button" type="submit" name="submit" value="Purchase">
                     </form>
                 </li>
