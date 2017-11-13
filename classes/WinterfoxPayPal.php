@@ -64,8 +64,8 @@ class WinterfoxPayPal {
     }
 
     public function createPayment() {
-        session_start();
         global $debug, $url, $paypalCreatePaymentURL, $taxing, $tax, $productsArray, $paymentType, $paymentMethod, $currencyCode, $shipping, $shippingDiscount, $handling, $insurance, $paymentDescription, $noteToPayer;
+        $_SESSION['store'] = convertObjectToObject( $_SESSION['store'], 'Store' );
 
         /**
          * Prepare Invoice Number
@@ -88,7 +88,8 @@ class WinterfoxPayPal {
         /**
          * Set Product Values
          */
-        $productId = $_SESSION['Store'];
+        $productId = $_SESSION['store']->getCart();
+        reset( $productId ); $productId = key( $productId );
         $product = $productsArray[$productId];
         $productName = $product['name'];
         $productDescription = $product['description'];
@@ -155,8 +156,8 @@ class WinterfoxPayPal {
                 "note_to_payer": "'.$noteToPayer.'",
                 "redirect_urls":
                 {
-                    "return_url": "'.$url.'/paypal/create-payment.php",
-                    "cancel_url": "'.$url.'/paypal/cancel-payment.php"
+                    "return_url": "'.get_the_permalink( get_page_by_title( 'Checkout' )->ID ).'?createPayment=TRUE",
+                    "cancel_url": "'.get_the_permalink( get_page_by_title( 'Checkout' )->ID ).'?cancelPayment=TRUE"
                 }
             }';
         $requestJSON = str_replace(PHP_EOL, '', $requestJSON);
@@ -198,6 +199,7 @@ class WinterfoxPayPal {
     public function executePayment() {
         session_start();
         global $debug, $dbConnectionString, $paypalExecutePaymentURL;
+        $_SESSION['store'] = convertObjectToObject( $_SESSION['store'], 'Store' );
 
         /**
          * Collect Payer ID

@@ -26,7 +26,7 @@ while ( have_posts() ) : the_post();
         <ul>
             <?php foreach ( $productsArray as $id => $product ) : ?>
                 <li>
-                    <form method="POST" action="<?= site_url() ?>/checkout">
+                    <form method="POST" action="#">
                         <h3>
                             <?= $product['name'] ?>
                             <?= $currencySymbol ?>

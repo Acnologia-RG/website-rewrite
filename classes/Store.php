@@ -6,8 +6,11 @@ class Store {
 
     public function __construct() {
         if ( isset( $_SESSION['store'] ) ) {
-            $this->status = $_SESSION['store']->status;
-            $this->cart = $_SESSION['store']->cart;
+            $this->status = $_SESSION['store-status'];
+            $this->cart = $_SESSION['store-cart'];
+        } else {
+            $this->setStatus( 'unavailable' );
+            $this->setCart( array() );
         }
     }
 
@@ -39,6 +42,7 @@ class Store {
             $status = FALSE;
         }
         $_SESSION['store'] = $this;
+        $_SESSION['store-status'];
         return $status;
     }
 
@@ -69,6 +73,7 @@ class Store {
             $cart = FALSE;
         }
         $_SESSION['store'] = $this;
+        $_SESSION['store-cart'];
         return $cart;
     }
 

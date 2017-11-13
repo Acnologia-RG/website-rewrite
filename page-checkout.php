@@ -19,7 +19,7 @@ while ( have_posts() ) : the_post();
 
     <?php // Display Products
     $store = $_SESSION['store'];
-    $cart = $store->getCart();
+    $cart = $_SESSION['store']->getCart();
     global $currencyCode;
     global $currencySymbol;
     if ( isset( $cart ) && !empty( $cart ) ) : ?>
@@ -64,12 +64,77 @@ while ( have_posts() ) : the_post();
                     <?php endforeach; ?>
                 </tbody>
             </table>
-            <form method="POST" action="<?= site_url() ?>/receipt">
+            <form method="POST" action="#">
                 <input class="button" type="submit" name="submit" value="Pay Now">
+                <div class="button" id="paypal-button">GAY FAGGOT</div>
+                <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+                <script>
+                    var CREATE_PAYMENT_URL  = '<?= get_the_permalink( get_page_by_title( 'Checkout' )->ID ) ?>?createPayment=TRUE';
+                    var EXECUTE_PAYMENT_URL = '<?= get_the_permalink( get_page_by_title( 'Checkout' )->ID ) ?>?executePayment=TRUE';
+
+                    paypal.Button.render({
+
+                        env: 'sandbox',
+                        commit: true, // Show a 'Pay Now' button
+
+                        payment: function() {
+                            return paypal.request.post(CREATE_PAYMENT_URL).then(function(data) {
+                                return JSON.parse(data).id;
+                            });
+                        },
+
+                        onAuthorize: function(data) {
+                            return paypal.request.post(EXECUTE_PAYMENT_URL, {
+                                paymentID: data.paymentID,
+                                payerID:   data.payerID
+                            }).then(function() {
+                                // Remove Purchase Button
+                                var paypalButton = document.getElementById( 'paypal-button' );
+                                paypalButton.parentElement.removeChild( paypalButton );
+
+                                // Create Success Elements/Text
+                                var paypalMessageOverlay = document.createElement( 'DIV' );
+                                var paypalMessageContainer = document.createElement( 'ARTICLE' );
+                                var paypalMessageTitle = document.createElement( 'H2' );
+                                var paypalMessageTitleText = document.createTextNode( 'PayPal Transaction Details' );
+                                var paypalMessageParagraph = document.createElement( 'P' );
+                                var paypalMessageParagraphText = document.createTextNode( 'Your payment was successful, thank you very much!' );
+                                var paypalMessageButton = document.createElement( 'BUTTON' );
+                                var paypalMessageButtonText = document.createTextNode( 'Okay' );
+
+                                // Prepare Success Elements/Text
+                                paypalMessageTitle.appendChild( paypalMessageTitleText );
+                                paypalMessageContainer.appendChild( paypalMessageTitle );
+                                paypalMessageParagraph.appendChild( paypalMessageParagraphText );
+                                paypalMessageContainer.appendChild( paypalMessageParagraph );
+                                paypalMessageButton.appendChild( paypalMessageButtonText );
+                                paypalMessageContainer.appendChild( paypalMessageButton );
+                                paypalMessageOverlay.appendChild( paypalMessageContainer );
+
+                                // Add ID to Container
+                                paypalMessageOverlay.setAttribute( 'id', 'paypal-message' );
+
+                                // Add Animation Classes
+                                paypalMessageOverlay.setAttribute( 'class', 'animated fadeIn' );
+                                paypalMessageContainer.setAttribute( 'class', 'animated fadeInBottom' );
+
+                                // Add Event Listener to Button
+                                paypalMessageButton.addEventListener( 'click', function(){
+                                    window.location = '<?= $url ?>';
+                                });
+
+                                // Add Message to HTML Document (wait 1 second)
+                                setTimeout(function(){
+                                    document.body.appendChild( paypalMessageOverlay );
+                                }, 1000);
+                            });
+                        }
+
+                    }, '#paypal-button');
+                </script>
             </form>
         </section>
     <?php endif;
-
 endwhile; // End of the loop.
 ?>
 

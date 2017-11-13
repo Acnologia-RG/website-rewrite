@@ -673,6 +673,7 @@ footer h2 {
     vertical-align: middle;
 }
 .checkout th {
+    background: rgb( 52, 52, 52 );
     color: rgb( 223, 77, 78 );
 }
 .checkout tr:last-child td {

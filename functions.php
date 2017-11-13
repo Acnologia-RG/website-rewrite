@@ -36,9 +36,9 @@ add_image_size( 'feature', 1920, 1080, array( 'center', 'center' ) );
 add_theme_support( 'post-thumbnails' );
 
 /**
- * General Settings / Declarations
+ * Load Classes
  */
-include_once __DIR__ . '/settings/general.php';
+include_once __DIR__ . '/classes/autoload.php';
 
 /**
  * Load Vendor Scripts
@@ -46,9 +46,9 @@ include_once __DIR__ . '/settings/general.php';
 include_once __DIR__ . '/vendor/autoload.php';
 
 /**
- * Load Classes
+ * General Settings / Declarations
  */
-include_once __DIR__ . '/classes/autoload.php';
+include_once __DIR__ . '/settings/general.php';
 
 /**
  * Load Utilities
