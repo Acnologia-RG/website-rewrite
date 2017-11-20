@@ -64,9 +64,9 @@ while ( have_posts() ) : the_post();
                     <?php endforeach; ?>
                 </tbody>
             </table>
-            <form method="POST" action="#">
-                <input class="button" type="submit" name="submit" value="Pay Now">
-                <div class="button" id="paypal-button">GAY FAGGOT</div>
+            <div class="paypal-actions">
+                <div id="paypal-button"></div>
+                <span class="button paypal-button">Paypal Checkout</span>
                 <script src="https://www.paypalobjects.com/api/checkout.js"></script>
                 <script>
                     var CREATE_PAYMENT_URL  = '<?= get_the_permalink( get_page_by_title( 'Checkout' )->ID ) ?>?createPayment=TRUE';
@@ -79,7 +79,11 @@ while ( have_posts() ) : the_post();
 
                         payment: function() {
                             return paypal.request.post(CREATE_PAYMENT_URL).then(function(data) {
-                                return JSON.parse(data).id;
+                                console.log('Data:');
+                                console.log(data);
+                                console.log('Data ID:');
+                                console.log(data.id);
+                                return data.id;
                             });
                         },
 
@@ -99,7 +103,7 @@ while ( have_posts() ) : the_post();
                                 var paypalMessageTitleText = document.createTextNode( 'PayPal Transaction Details' );
                                 var paypalMessageParagraph = document.createElement( 'P' );
                                 var paypalMessageParagraphText = document.createTextNode( 'Your payment was successful, thank you very much!' );
-                                var paypalMessageButton = document.createElement( 'BUTTON' );
+                                var paypalMessageButton = document.createElement( 'A' );
                                 var paypalMessageButtonText = document.createTextNode( 'Okay' );
 
                                 // Prepare Success Elements/Text
@@ -114,9 +118,13 @@ while ( have_posts() ) : the_post();
                                 // Add ID to Container
                                 paypalMessageOverlay.setAttribute( 'id', 'paypal-message' );
 
+                                // Add Link and Class to Button
+                                paypalMessageButton.setAttribute( 'href', '<?= get_the_permalink( get_page_by_title( 'Shop' )->ID ) ?>' );
+                                paypalMessageButton.setAttribute( 'class', 'button' );
+
                                 // Add Animation Classes
-                                paypalMessageOverlay.setAttribute( 'class', 'animated fadeIn' );
-                                paypalMessageContainer.setAttribute( 'class', 'animated fadeInBottom' );
+                                paypalMessageOverlay.setAttribute( 'class', 'fade-in' );
+                                paypalMessageContainer.setAttribute( 'class', 'slide-in-from-top' );
 
                                 // Add Event Listener to Button
                                 paypalMessageButton.addEventListener( 'click', function(){
@@ -132,7 +140,7 @@ while ( have_posts() ) : the_post();
 
                     }, '#paypal-button');
                 </script>
-            </form>
+            </div>
         </section>
     <?php endif;
 endwhile; // End of the loop.

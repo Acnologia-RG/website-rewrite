@@ -6,7 +6,10 @@ class WinterfoxPayPal {
 
     public function __construct() {
         session_start();
-        global $debug, $currentTime, $paypalClientId, $paypalClientSecret;
+        global $debug,
+               $currentTime,
+               $paypalClientId,
+               $paypalClientSecret;
 
         // Set API Context
         $apiContext = new \PayPal\Rest\ApiContext(
@@ -33,7 +36,10 @@ class WinterfoxPayPal {
     }
 
     public function getToken() {
-        global $currentTime, $paypalUserTokenURL, $paypalClientId, $paypalClientSecret;
+        global $currentTime,
+               $paypalUserTokenURL,
+               $paypalClientId,
+               $paypalClientSecret;
 
         $ch = curl_init();
 
@@ -64,7 +70,21 @@ class WinterfoxPayPal {
     }
 
     public function createPayment() {
-        global $debug, $url, $paypalCreatePaymentURL, $taxing, $tax, $productsArray, $paymentType, $paymentMethod, $currencyCode, $shipping, $shippingDiscount, $handling, $insurance, $paymentDescription, $noteToPayer;
+        global $debug,
+               $url,
+               $paypalCreatePaymentURL,
+               $taxing,
+               $tax,
+               $productsArray,
+               $paymentType,
+               $paymentMethod,
+               $currencyCode,
+               $shipping,
+               $shippingDiscount,
+               $handling,
+               $insurance,
+               $paymentDescription,
+               $noteToPayer;
         $_SESSION['store'] = convertObjectToObject( $_SESSION['store'], 'Store' );
 
         /**
@@ -89,7 +109,7 @@ class WinterfoxPayPal {
          * Set Product Values
          */
         $productId = $_SESSION['store']->getCart();
-        reset( $productId ); $productId = key( $productId );
+        reset( $productId ); $productId = trim( key( $productId ) );
         $product = $productsArray[$productId];
         $productName = $product['name'];
         $productDescription = $product['description'];
@@ -100,6 +120,15 @@ class WinterfoxPayPal {
         $subtotal = $product['price'];
         $subtotalTax = $productTax;
         $total = $subtotal+$subtotalTax;
+
+        /**
+         * Format Numbers
+         */
+        $productPrice = number_format( $productPrice, 2, '.', ',' );
+        $productTax = number_format( $productTax, 2, '.', ',' );
+        $subtotal = number_format( $subtotal, 2, '.', ',' );
+        $subtotalTax = number_format( $subtotalTax, 2, '.', ',' );
+        $total = number_format( $total, 2, '.', ',' );
 
         /**
          * Set JSON Values
@@ -185,7 +214,7 @@ class WinterfoxPayPal {
             echo 'cURL Error: ' . curl_error($ch);
             error_log( 'cURL Error: ' . curl_error($ch) );
         } else {
-            if ( $debug ) echo json_encode($result);
+//            if ( $debug ) echo json_encode($result);
             $resultJSON = json_decode($result);
             $_SESSION['confirmation'] = $resultJSON;
         }
@@ -194,11 +223,15 @@ class WinterfoxPayPal {
          * Close cURL Operations
          */
         curl_close($ch);
+
+        return $result;
     }
 
     public function executePayment() {
         session_start();
-        global $debug, $dbConnectionString, $paypalExecutePaymentURL;
+        global $debug,
+               $dbConnectionString,
+               $paypalExecutePaymentURL;
         $_SESSION['store'] = convertObjectToObject( $_SESSION['store'], 'Store' );
 
         /**
@@ -283,5 +316,7 @@ class WinterfoxPayPal {
                 error_log($e);
             }
         }
+
+        return $result;
     }
 }

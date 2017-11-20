@@ -73,8 +73,20 @@ class Store {
             $cart = FALSE;
         }
         $_SESSION['store'] = $this;
-        $_SESSION['store-cart'];
+        $_SESSION['store-cart'] = $cart;
         return $cart;
+    }
+
+    static function storeActions() {
+        if ( isset($_GET) && ( ( $_GET['createPayment'] === 'TRUE' ) || ( $_GET['executePayment'] === 'TRUE' ) ) ) {
+            $winterfoxPayPal = new WinterfoxPayPal();
+            if ( $_GET['createPayment'] === 'TRUE' ) {
+                return $winterfoxPayPal->createPayment();
+            } else if ( $_GET['executePayment'] === 'TRUE' ) {
+                return $winterfoxPayPal->executePayment();
+            }
+        }
+        return FALSE;
     }
 
     public function reviewPurchase() {

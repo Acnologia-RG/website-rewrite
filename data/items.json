@@ -109,9 +109,9 @@
   },
   {
     "id": 1120,
-    "name": "Wizard waltz",
+    "name": "Wizards waltz",
     "type": "BACKGROUND",
-    "path": "/wolf/bg/wizard-waltz.png",
+    "path": "/wolf/bg/wizards-waltz.png",
     "forSale": true,
     "coins": 600,
     "gems": 25
