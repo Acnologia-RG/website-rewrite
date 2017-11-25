@@ -3,6 +3,15 @@ get_header();
 ?>
 
 <?php
+require __DIR__ . '/callback.php';
+require __DIR__ . '/includes/discord-login.php';
+
+if (!isset($_SESSION['user']))
+	header("Location: " . site_url() . "/shop");
+
+if (isset($_GET['code']))
+	header("Location: " . site_url() . "/checkout");
+
 while ( have_posts() ) : the_post();
     ?>
 
@@ -74,7 +83,7 @@ while ( have_posts() ) : the_post();
 
                     paypal.Button.render({
 
-                        env: 'sandbox',
+                        env: 'production',
                         commit: true, // Show a 'Pay Now' button
 
                         payment: function() {

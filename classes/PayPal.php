@@ -1,15 +1,12 @@
 <?php
 include_once __DIR__ . '/../settings/general.php';
 include_once __DIR__ . '/../data/products.php';
-class WinterfoxPayPal {
+class PayPal {
     private $paypalToken;
 
     public function __construct() {
         session_start();
-        global $debug,
-               $currentTime,
-               $paypalClientId,
-               $paypalClientSecret;
+        global $debug, $currentTime, $paypalClientId, $paypalClientSecret;
 
         // Set API Context
         $apiContext = new \PayPal\Rest\ApiContext(
@@ -36,10 +33,7 @@ class WinterfoxPayPal {
     }
 
     public function getToken() {
-        global $currentTime,
-               $paypalUserTokenURL,
-               $paypalClientId,
-               $paypalClientSecret;
+        global $currentTime, $paypalUserTokenURL, $paypalClientId, $paypalClientSecret;
 
         $ch = curl_init();
 
@@ -70,22 +64,8 @@ class WinterfoxPayPal {
     }
 
     public function createPayment() {
-        global $debug,
-               $url,
-               $paypalCreatePaymentURL,
-               $taxing,
-               $tax,
-               $productsArray,
-               $paymentType,
-               $paymentMethod,
-               $currencyCode,
-               $shipping,
-               $shippingDiscount,
-               $handling,
-               $insurance,
-               $paymentDescription,
-               $noteToPayer;
-        $_SESSION['store'] = convertObjectToObject( $_SESSION['store'], 'Store' );
+        session_start();
+        global $debug, $url, $paypalCreatePaymentURL, $taxing, $tax, $productsArray, $paymentType, $paymentMethod, $currencyCode, $shipping, $shippingDiscount, $handling, $insurance, $paymentDescription, $noteToPayer;
 
         /**
          * Prepare Invoice Number
@@ -108,8 +88,7 @@ class WinterfoxPayPal {
         /**
          * Set Product Values
          */
-        $productId = $_SESSION['store']->getCart();
-        reset( $productId ); $productId = trim( key( $productId ) );
+        $productId = $_SESSION['cart'];
         $product = $productsArray[$productId];
         $productName = $product['name'];
         $productDescription = $product['description'];
@@ -120,15 +99,6 @@ class WinterfoxPayPal {
         $subtotal = $product['price'];
         $subtotalTax = $productTax;
         $total = $subtotal+$subtotalTax;
-
-        /**
-         * Format Numbers
-         */
-        $productPrice = number_format( $productPrice, 2, '.', ',' );
-        $productTax = number_format( $productTax, 2, '.', ',' );
-        $subtotal = number_format( $subtotal, 2, '.', ',' );
-        $subtotalTax = number_format( $subtotalTax, 2, '.', ',' );
-        $total = number_format( $total, 2, '.', ',' );
 
         /**
          * Set JSON Values
@@ -158,7 +128,7 @@ class WinterfoxPayPal {
                             }
                         },
                         "description": "'.$paymentDescription.'",
-                        "custom": "' . $_SESSION['user']->id . '",
+                        "custom": "'.$_SESSION['discordId'].'",
                         "invoice_number": "'.$invoiceNumber.'",
                         "payment_options":
                         {
@@ -185,8 +155,8 @@ class WinterfoxPayPal {
                 "note_to_payer": "'.$noteToPayer.'",
                 "redirect_urls":
                 {
-                    "return_url": "'.get_the_permalink( get_page_by_title( 'Checkout' )->ID ).'?createPayment=TRUE",
-                    "cancel_url": "'.get_the_permalink( get_page_by_title( 'Checkout' )->ID ).'?cancelPayment=TRUE"
+                    "return_url": "'.$url.'/paypal/create-payment.php",
+                    "cancel_url": "'.$url.'/paypal/cancel-payment.php"
                 }
             }';
         $requestJSON = str_replace(PHP_EOL, '', $requestJSON);
@@ -214,7 +184,7 @@ class WinterfoxPayPal {
             echo 'cURL Error: ' . curl_error($ch);
             error_log( 'cURL Error: ' . curl_error($ch) );
         } else {
-//            if ( $debug ) echo json_encode($result);
+            if ( $debug ) echo json_encode($result);
             $resultJSON = json_decode($result);
             $_SESSION['confirmation'] = $resultJSON;
         }
@@ -223,16 +193,11 @@ class WinterfoxPayPal {
          * Close cURL Operations
          */
         curl_close($ch);
-
-        return $result;
     }
 
     public function executePayment() {
         session_start();
-        global $debug,
-               $dbConnectionString,
-               $paypalExecutePaymentURL;
-        $_SESSION['store'] = convertObjectToObject( $_SESSION['store'], 'Store' );
+        global $debug, $dbConnectionString, $paypalExecutePaymentURL;
 
         /**
          * Collect Payer ID
@@ -287,37 +252,34 @@ class WinterfoxPayPal {
          */
         unset($_SESSION['invoiceNumber']);
         unset($_SESSION['paypalToken']);
-        unset($_SESSION['Store']);
+        unset($_SESSION['cart']);
         unset($_SESSION['confirmation']);
         unset($_SESSION['payment']);
 
-		var_dump($resultJSON);
         /**
          * Update User in Database
          */
         if ( $resultJSON->state === 'approved' ) {
             global $productsArray;
 
-            $discordID = (int) $resultJSON->transactions[0]->custom;
+            $discordID = (int)$resultJSON->transactions[0]->custom;
             $gems = $productsArray[$resultJSON->transactions[0]->item_list->items[0]->sku]['gems'];
 
             try {
                 if ( $connection = pg_connect( $dbConnectionString ) ) {
-                    $query = 'UPDATE user SET gems=gems + $1 WHERE id=$2;';
+                    $query = 'UPDATE users.user SET foxGems=foxGems + $1 WHERE id=$2;';
                     $request = pg_prepare( $connection, 'payment', $query );
                     if ( $request ) {
                         pg_execute( $connection, 'payment', array((int)$gems, (int)$discordID) );
                     }
                     pg_close( $connection );
                 } else {
-                    error_log('No database connection established for transaction ');
+                    error_log('No database connection established.');
                 }
             } catch( Exception $e ) {
                 echo $e;
                 error_log($e);
             }
         }
-
-        return $result;
     }
 }
